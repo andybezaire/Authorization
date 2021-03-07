@@ -5,8 +5,8 @@
 //  Created by Andy Bezaire on 3.3.2021.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 extension Auth {
     func fetch(_ request: URLRequest) -> AnyPublisher<URLResult, Error> {
