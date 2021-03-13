@@ -11,10 +11,11 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "CombineExtras", url: "https://github.com/andybezaire/CombineExtras.git", from: "1.0.0"),
+        .package(name: "Mocker", url: "https://github.com/WeTransfer/Mocker.git", from: "2.3.0")
     ],
     targets: [
         .target(name: "Authentication", dependencies: ["CombineExtras"]),
         .target(name: "AuthenticationTestUtils", dependencies: ["CombineExtras"], path: "Tests/AuthenticationTestUtils"),
-        .testTarget(name: "AuthenticationTests", dependencies: ["Authentication", "AuthenticationTestUtils"]),
+        .testTarget(name: "AuthenticationTests", dependencies: ["Authentication", "AuthenticationTestUtils", "Mocker"]),
     ]
 )
