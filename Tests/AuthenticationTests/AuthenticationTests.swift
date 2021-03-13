@@ -5,6 +5,8 @@ import Mocker
 import XCTest
 
 final class AuthenticationTests: XCTestCase {
+    let url = URL(string: "http://example.com")!
+    var request: URLRequest { URLRequest(url: url) }
 
     var getTokensSuccess: MockFunction0<AnyPublisher<Auth.Tokens, Error>>!
 
@@ -14,11 +16,13 @@ final class AuthenticationTests: XCTestCase {
 
     var shouldDoRefreshForAlways: MockFunction1<Auth.URLResult, Bool>!
     var shouldDoRefreshForNever: MockFunction1<Auth.URLResult, Bool>!
+    var firstTime = true
+    var shouldDoRefreshForFirstTimeOnly: MockFunction1<Auth.URLResult, Bool>!
 
-    var token: MockSubject<String?, Never>!
-    var validToken: MockSubject<String?, Never>!
-    var refresh: MockSubject<String?, Never>!
-    var validRefresh: MockSubject<String?, Never>!
+    var token: MockTokenValueSubject<String?, Never>!
+    var validToken: MockTokenValueSubject<String?, Never>!
+    var refresh: MockTokenValueSubject<String?, Never>!
+    var validRefresh: MockTokenValueSubject<String?, Never>!
 
     var cancellable: AnyCancellable?
 
@@ -42,11 +46,20 @@ final class AuthenticationTests: XCTestCase {
 
         shouldDoRefreshForAlways = MockFunction1 { (_: Auth.URLResult) in true }
         shouldDoRefreshForNever = MockFunction1 { (_: Auth.URLResult) in false }
+        firstTime = true
+        shouldDoRefreshForFirstTimeOnly = MockFunction1 { [unowned self] (_: Auth.URLResult) in
+            if firstTime {
+                firstTime = false
+                return true
+            } else {
+                return false
+            }
+        }
 
-        token = MockSubject<String?, Never>(nil)
-        validToken = MockSubject<String?, Never>("TOKEN")
-        refresh = MockSubject<String?, Never>(nil)
-        validRefresh = MockSubject<String?, Never>("REFRESH")
+        token = MockTokenValueSubject<String?, Never>(nil)
+        validToken = MockTokenValueSubject<String?, Never>("TOKEN")
+        refresh = MockTokenValueSubject<String?, Never>(nil)
+        validRefresh = MockTokenValueSubject<String?, Never>("REFRESH")
     }
 
     func testSignIn() {
@@ -57,8 +70,8 @@ final class AuthenticationTests: XCTestCase {
             doRefreshToken: refreshTokenSuccess(),
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForAlways(),
-            tokenSubject: token.eraseToAnySubject(),
-            refreshSubject: refresh.eraseToAnySubject()
+            tokenSubject: token,
+            refreshSubject: refresh
         )
 
         cancellable = auth.signIn()
@@ -91,12 +104,9 @@ final class AuthenticationTests: XCTestCase {
             doRefreshToken: refreshTokenSuccess(),
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForNever(),
-            tokenSubject: validToken.eraseToAnySubject(),
-            refreshSubject: refresh.eraseToAnySubject()
+            tokenSubject: validToken,
+            refreshSubject: refresh
         )
-
-        let url = URL(string: "http://example.com")!
-        let request = URLRequest(url: url)
 
         Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
             .register()
@@ -116,12 +126,12 @@ final class AuthenticationTests: XCTestCase {
             })
 
         wait(for: [fetchFinished], timeout: 1)
-        
+
         XCTAssertEqual(signRequestPassthrough.callCount, 1, "should have signed request once")
         XCTAssertEqual(shouldDoRefreshForNever.callCount, 1, "should have checked to see if we need to refresh token")
     }
 
-    func testFetchWhenNotSignedIn() {
+    func testFetchWhenNotSignedInFails() {
         let requestFinished = XCTestExpectation(description: "Fetch request finished")
 
         let auth = Auth(
@@ -129,12 +139,9 @@ final class AuthenticationTests: XCTestCase {
             doRefreshToken: refreshTokenSuccess(),
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForAlways(),
-            tokenSubject: token.eraseToAnySubject(),
-            refreshSubject: refresh.eraseToAnySubject()
+            tokenSubject: token,
+            refreshSubject: refresh
         )
-
-        let url = URL(string: "http://example.com")!
-        let request = URLRequest(url: url)
 
         Mock(url: url, dataType: .json, statusCode: 999, data: [.get: Data()], requestError: URLError(.badURL))
             .register()
@@ -155,6 +162,43 @@ final class AuthenticationTests: XCTestCase {
         wait(for: [requestFinished], timeout: 1)
     }
 
+    func testFetchRefreshSuccesful() {
+        let fetchFinished = XCTestExpectation(description: "Fetch request finished")
+
+        let auth = Auth(
+            doGetTokens: getTokensSuccess(),
+            doRefreshToken: refreshTokenSuccess(),
+            signRequest: signRequestPassthrough(),
+            shouldDoRefreshFor: shouldDoRefreshForFirstTimeOnly(),
+            tokenSubject: validToken,
+            refreshSubject: validRefresh
+        )
+
+        Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
+            .register()
+
+        cancellable = auth.fetch(request)
+            .sink(receiveCompletion: { (completion) in
+                switch completion {
+                case .finished:
+                    fetchFinished.fulfill() // success
+                case .failure(_):
+                    XCTFail("Should not fail on finish")
+                }
+            }, receiveValue: { (result) in
+                let code = (result.response as? HTTPURLResponse)?.statusCode
+                XCTAssertNotNil(code, "Response should be HTTPURLResponse")
+                XCTAssertEqual(code, 200, "Status code should be 200")
+            })
+
+        wait(for: [fetchFinished], timeout: 1)
+
+        XCTAssertEqual(signRequestPassthrough.callCount, 2, "should have signed request twice, once for the first time getting refresh needed and once for the new request weith the refreshed token")
+        XCTAssertEqual(shouldDoRefreshForFirstTimeOnly.callCount, 2, "should have checked to see if we need to refresh token twice, once for the first time getting refresh needed and once for the new request weith the refreshed token")
+        XCTAssertEqual(refreshTokenSuccess.callCount, 1, "should have refresed token")
+        XCTAssertEqual(validToken.values.first, "REFRESH+TOKEN", "token should have gotten the refresh value")
+        XCTAssertEqual(validRefresh.values.first, "REFRESH+REFRESH", "token should have gotten the refresh value")
+    }
 //    func testRefreshAttemptForExpired() {
 //        let requestFinished = XCTestExpectation(description: "Fetch request finished")
 //
@@ -196,7 +240,8 @@ final class AuthenticationTests: XCTestCase {
 
     static var allTests = [
         ("testSignIn", testSignIn),
-        ("testFetchWhenNotSignedIn", testFetchWhenNotSignedIn),
+        ("testFetchSuccesful", testFetchSuccesful),
+        ("testFetchWhenNotSignedInFails", testFetchWhenNotSignedInFails),
     ]
 }
 

@@ -6,33 +6,27 @@
 //
 
 import Combine
+import Authentication
 import Foundation
 
-public class MockSubject<Output, Failure>: Subject where Failure: Error {
-    let subject: CurrentValueSubject<Output, Failure>
-
-    public init(_ initialValue: Output) {
-        self.subject = CurrentValueSubject<Output, Failure>(initialValue)
-    }
-
-    public func send(_ value: Output) {
+public class MockTokenValueSubject<Output, Failure>: TokenValueSubject<Output, Failure> where Failure: Error {
+    override open func send(_ value: Output) {
         values.append(value)
-        subject.send(value)
+        super.send(value)
     }
 
-    public func send(subscription: Subscription) {
+    open override func send(subscription: Subscription) {
         subscriptionCallCount += 1
-        subject.send(subscription: subscription)
+        super.send(subscription: subscription)
     }
 
-    public func send(completion: Subscribers.Completion<Failure>) {
+    open override func send(completion: Subscribers.Completion<Failure>) {
         completions.append(completion)
-        subject.send(completion: completion)
+        super.send(completion: completion)
     }
-
-    public func receive<S>(subscriber: S) where S: Subscriber, S.Failure == Failure, S.Input == Output {
+    open override func receive<S>(subscriber: S) where Output == S.Input, Failure == S.Failure, S : Subscriber {
         recieveCallCount += 1
-        subject.receive(subscriber: subscriber)
+        super.receive(subscriber: subscriber)
     }
 
     internal(set) public var values = [Output]()

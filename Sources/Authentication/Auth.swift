@@ -6,7 +6,6 @@
 //
 
 import Combine
-import CombineExtras
 import Foundation
 
 public class Auth {
@@ -15,8 +14,8 @@ public class Auth {
         doRefreshToken: @escaping (_ refresh: Refresh) -> AnyPublisher<Tokens, Swift.Error>,
         signRequest: @escaping (_ request: URLRequest, _ token: Token) -> URLRequest = Auth.signedWithBearerToken,
         shouldDoRefreshFor: @escaping (_ result: URLResult) -> Bool = Auth.isResponseCode403,
-        tokenSubject: AnySubject<Token?, Never> = CurrentValueSubject<Token?, Never>(nil).eraseToAnySubject(),
-        refreshSubject: AnySubject<Refresh?, Never> = CurrentValueSubject<Refresh?, Never>(nil).eraseToAnySubject()
+        tokenSubject: TokenValueSubject<Token?, Never> = TokenValueSubject<Token?, Never>(nil),
+        refreshSubject: TokenValueSubject<Refresh?, Never> = TokenValueSubject<Refresh?, Never>(nil)
     ) {
         self.doGetTokens = doGetTokens
         self.doRefreshToken = doRefreshToken
@@ -31,13 +30,13 @@ public class Auth {
     let signRequest: (_ request: URLRequest, _ token: Token) -> URLRequest
     let shouldDoRefreshFor: (_ result: URLResult) -> Bool
 
-    let tokenSubject: AnySubject<Token?, Never>
+    let tokenSubject: TokenValueSubject<Token?, Never>
     var token: AnyPublisher<Token?, Never> {
         return tokenSubject
             .eraseToAnyPublisher()
     }
 
-    let refreshSubject: AnySubject<Refresh?, Never>
+    let refreshSubject: TokenValueSubject<Refresh?, Never>
     var refresh: AnyPublisher<Refresh?, Never> {
         return refreshSubject
             .eraseToAnyPublisher()
@@ -50,12 +49,13 @@ public class Auth {
 
 extension Auth {
     func refreshTokens() {
-        refreshingToken = refresh
+        refreshingToken = Just(refreshSubject.value)
             .tryMap(tryUnwrapToken)
             .flatMap(doRefreshToken)
             .mapError { _ in Error.tokenExpired }
             .map { $0 as Tokens? }
             .replaceError(with: nil)
+            .first()
             .sink(receiveValue: saveInSubjects)
     }
 
