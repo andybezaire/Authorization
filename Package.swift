@@ -13,10 +13,8 @@ let package = Package(
         .package(name: "CombineExtras", url: "https://github.com/andybezaire/CombineExtras.git", from: "1.0.0"),
     ],
     targets: [
-        .target(
-            name: "Authentication",
-            dependencies: ["CombineExtras"]),
-        .testTarget(
-            name: "AuthenticationTests",
-            dependencies: ["Authentication"]),
-    ])
+        .target(name: "Authentication", dependencies: ["CombineExtras"]),
+        .target(name: "AuthenticationTestUtils", dependencies: ["CombineExtras"], path: "Tests/AuthenticationTestUtils"),
+        .testTarget(name: "AuthenticationTests", dependencies: ["Authentication", "AuthenticationTestUtils"]),
+    ]
+)
