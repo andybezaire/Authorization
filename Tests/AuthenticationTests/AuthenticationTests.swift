@@ -1,7 +1,6 @@
 @testable import Authentication
 import AuthenticationTestUtils
 import Combine
-import Mocker
 import XCTest
 
 class AuthenticationTests: XCTestCase {
