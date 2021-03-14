@@ -36,6 +36,7 @@ final class AuthenticationTests: XCTestCase {
 
     override func setUp() {
         // MARK: - doGetTokens mocks
+
         getTokensSuccess = MockFunction0 {
             Just(Auth.Tokens(token: "TOKEN", refresh: "REFRESH"))
                 .setFailureType(to: Error.self)
@@ -53,6 +54,7 @@ final class AuthenticationTests: XCTestCase {
         }
 
         // MARK: - doRefreshToken mocks
+
         refreshTokenSuccess = MockFunction1 { (refresh: String) in
             Just(Auth.Tokens(token: refresh + "+TOKEN", refresh: refresh + "+REFRESH"))
                 .setFailureType(to: Error.self)
@@ -70,16 +72,18 @@ final class AuthenticationTests: XCTestCase {
         }
 
         // MARK: - signRequest: mocks
+
         signRequestPassthrough = MockFunction2 { (request: URLRequest, _: String) in
             request
         }
 
-        signRequestUnused = MockFunction2 { (request: URLRequest, _: String) in
+        signRequestUnused = MockFunction2 { (_: URLRequest, _: String) in
             XCTFail("signRequest should not be called")
             return URLRequest(url: URL(string: "www.example.com/empty")!)
         }
 
         // MARK: - shouldDoRefreshFor mocks
+
         shouldDoRefreshForAlways = MockFunction1 { (_: Auth.URLResult) in true }
 
         shouldDoRefreshForNever = MockFunction1 { (_: Auth.URLResult) in false }
@@ -106,13 +110,21 @@ final class AuthenticationTests: XCTestCase {
         }
 
         // MARK: - tokenSubject mocks
+
         token = MockTokenValueSubject<String?, Never>(nil)
         validToken = MockTokenValueSubject<String?, Never>("TOKEN")
 
         // MARK: - refreshSubject mocks
+
         refresh = MockTokenValueSubject<String?, Never>(nil)
         validRefresh = MockTokenValueSubject<String?, Never>("REFRESH")
     }
+
+    override func tearDown() {
+        cancellable = nil
+    }
+
+    // MARK: - Sign in tests
 
     func testSignInSuccessful() {
         let signInFinished = XCTestExpectation(description: "Sign in finished")
@@ -148,6 +160,42 @@ final class AuthenticationTests: XCTestCase {
         XCTAssertEqual(refresh.value, "REFRESH", "should have gotten proper refresh")
     }
 
+    func testSignInFails() {
+        let signInFinished = XCTestExpectation(description: "Sign in finished")
+
+        let auth = Auth(
+            doGetTokens: getTokensFail(),
+            doRefreshToken: refreshTokenUnused(),
+            signRequest: signRequestUnused(),
+            shouldDoRefreshFor: shouldDoRefreshForUnused(),
+            tokenSubject: token,
+            refreshSubject: refresh
+        )
+
+        cancellable = auth.signIn()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("Sign in should fail")
+                case .failure(let error):
+                    XCTAssertEqual(error, Auth.Error.signInFailed(TestError.canBeAnyError), "Error sould be signInFailed")
+                    signInFinished.fulfill() // success
+                }
+            }, receiveValue: { _ in
+                XCTFail("Sign in should not receive value")
+            })
+
+        wait(for: [signInFinished], timeout: 1)
+
+        XCTAssertEqual(getTokensFail.callCount, 1, "should fetch tokens once")
+        XCTAssertEqual(token.valueCallCount, 1, "should have gotten value once")
+        XCTAssertNil(token.value, "token should have been cleared to nil")
+        XCTAssertEqual(refresh.valueCallCount, 1, "should have gotten value once")
+        XCTAssertNil(refresh.value, "refresh should have been cleared to nil")
+    }
+
+    // MARK: - Fetch tests
+
     func testFetchSuccessful() {
         let fetchFinished = XCTestExpectation(description: "Fetch request finished")
 
@@ -181,34 +229,6 @@ final class AuthenticationTests: XCTestCase {
 
         XCTAssertEqual(signRequestPassthrough.callCount, 1, "should have signed request once")
         XCTAssertEqual(shouldDoRefreshForNever.callCount, 1, "should have checked to see if we need to refresh token")
-    }
-
-    func testFetchWhenNotSignedInFails() {
-        let requestFinished = XCTestExpectation(description: "Fetch request finished")
-
-        let auth = Auth(
-            doGetTokens: getTokensUnused(),
-            doRefreshToken: refreshTokenUnused(),
-            signRequest: signRequestUnused(),
-            shouldDoRefreshFor: shouldDoRefreshForUnused(),
-            tokenSubject: token,
-            refreshSubject: refresh
-        )
-
-        cancellable = auth.fetch(request)
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    XCTFail("Fetch should complete with error")
-                case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.tokenExpired, "Error should be token expired")
-                }
-                requestFinished.fulfill()
-            }, receiveValue: { _ in
-                XCTFail("Fetch should not receive value, it should fail with error")
-            })
-
-        wait(for: [requestFinished], timeout: 1)
     }
 
     func testFetchRefreshSuccessful() {
@@ -249,6 +269,34 @@ final class AuthenticationTests: XCTestCase {
         XCTAssertEqual(validRefresh.value, "REFRESH+REFRESH", "token should have gotten the refresh value")
     }
 
+    func testFetchWhenNotSignedInFails() {
+        let requestFinished = XCTestExpectation(description: "Fetch request finished")
+
+        let auth = Auth(
+            doGetTokens: getTokensUnused(),
+            doRefreshToken: refreshTokenUnused(),
+            signRequest: signRequestUnused(),
+            shouldDoRefreshFor: shouldDoRefreshForUnused(),
+            tokenSubject: token,
+            refreshSubject: refresh
+        )
+
+        cancellable = auth.fetch(request)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("Fetch should complete with error")
+                case .failure(let error):
+                    XCTAssertEqual(error, Auth.Error.tokenExpired, "Error should be token expired")
+                }
+                requestFinished.fulfill()
+            }, receiveValue: { _ in
+                XCTFail("Fetch should not receive value, it should fail with error")
+            })
+
+        wait(for: [requestFinished], timeout: 1)
+    }
+
     func testFetchWithExpiredRefreshTokenFails() {
         let fetchFinished = XCTestExpectation(description: "Fetch request finished")
 
@@ -286,39 +334,7 @@ final class AuthenticationTests: XCTestCase {
         XCTAssertNil(validToken.value, "should have reset refresh to nil on error")
     }
 
-    func testSignInFails() {
-        let signInFinished = XCTestExpectation(description: "Sign in finished")
-
-        let auth = Auth(
-            doGetTokens: getTokensFail(),
-            doRefreshToken: refreshTokenUnused(),
-            signRequest: signRequestUnused(),
-            shouldDoRefreshFor: shouldDoRefreshForUnused(),
-            tokenSubject: token,
-            refreshSubject: refresh
-        )
-
-        cancellable = auth.signIn()
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    XCTFail("Sign in should fail")
-                case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.signInFailed(TestError.canBeAnyError), "Error sould be signInFailed")
-                    signInFinished.fulfill() // success
-                }
-            }, receiveValue: { _ in
-                XCTFail("Sign in should not receive value")
-            })
-
-        wait(for: [signInFinished], timeout: 1)
-
-        XCTAssertEqual(getTokensFail.callCount, 1, "should fetch tokens once")
-        XCTAssertEqual(token.valueCallCount, 1, "should have gotten value once")
-        XCTAssertNil(token.value, "token should have been cleared to nil")
-        XCTAssertEqual(refresh.valueCallCount, 1, "should have gotten value once")
-        XCTAssertNil(refresh.value, "refresh should have been cleared to nil")
-    }
+    // MARK: - multiple fetch tests
 
     func testTwoFetchesSucceessful() {
         let auth = Auth(
@@ -433,7 +449,7 @@ final class AuthenticationTests: XCTestCase {
         cancellable = auth.fetch(request)
             .sink { completion in
                 switch completion {
-                case .failure(_):
+                case .failure:
                     break // should complete with error
                 case .finished:
                     XCTFail("Fetch should complete with error")
