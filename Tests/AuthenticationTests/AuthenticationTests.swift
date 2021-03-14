@@ -298,8 +298,6 @@ final class AuthenticationTests: XCTestCase {
     }
 
     func testFetchWithExpiredRefreshTokenFails() {
-        let fetchFinished = XCTestExpectation(description: "Fetch request finished")
-
         let auth = Auth(
             doGetTokens: getTokensUnused(),
             doRefreshToken: refreshTokenFail(),
@@ -311,6 +309,8 @@ final class AuthenticationTests: XCTestCase {
 
         Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
             .register()
+
+        let fetchFinished = XCTestExpectation(description: "Fetch request finished")
 
         cancellable = auth.fetch(request)
             .sink(receiveCompletion: { completion in
@@ -331,7 +331,40 @@ final class AuthenticationTests: XCTestCase {
         XCTAssertEqual(shouldDoRefreshForFirstTimeOnly.callCount, 1, "should have checked to see if we need to refresh token once")
         XCTAssertEqual(refreshTokenFail.callCount, 1, "should have tried to refresh token")
         XCTAssertNil(validToken.value, "should have reset token to nil on error")
-        XCTAssertNil(validToken.value, "should have reset refresh to nil on error")
+        XCTAssertNil(validRefresh.value, "should have reset refresh to nil on error")
+    }
+
+    func testFetchWithSessionFailFails() {
+        let auth = Auth(
+            doGetTokens: getTokensUnused(),
+            doRefreshToken: refreshTokenUnused(),
+            signRequest: signRequestPassthrough(),
+            shouldDoRefreshFor: shouldDoRefreshForUnused(),
+            tokenSubject: validToken,
+            refreshSubject: refresh
+        )
+
+        Mock(url: url, dataType: .json, statusCode: 999, data: [.get: Data()], requestError: URLError(.badURL))
+            .register()
+
+        let fetchFinished = XCTestExpectation(description: "Fetch request finished")
+
+        cancellable = auth.fetch(request)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("Should fail with error")
+                case .failure(let error):
+                    XCTAssertEqual(error, Auth.Error.urlError(URLError(.badURL)), "Error should be from session")
+                    fetchFinished.fulfill() // success
+                }
+            }, receiveValue: { _ in
+                XCTFail("Should fail with error and not receive a response")
+            })
+
+        wait(for: [fetchFinished], timeout: 1)
+
+        XCTAssertEqual(signRequestPassthrough.callCount, 1, "should have signed request once")
     }
 
     // MARK: - multiple fetch tests
@@ -479,16 +512,70 @@ final class AuthenticationTests: XCTestCase {
         wait(for: [secondFetchFinished], timeout: 1)
     }
 
+    func testTwoSessionFailedFetchesBothFail() {
+        let auth = Auth(
+            doGetTokens: getTokensUnused(),
+            doRefreshToken: refreshTokenUnused(),
+            signRequest: signRequestPassthrough(),
+            shouldDoRefreshFor: shouldDoRefreshForUnused(),
+            tokenSubject: validToken,
+            refreshSubject: refresh
+        )
+
+        Mock(url: url, dataType: .json, statusCode: 999, data: [.get: Data()], requestError: URLError(.badURL))
+            .register()
+
+        let firstFetchFinished = XCTestExpectation(description: "First fetch request finished")
+
+        cancellable = auth.fetch(request)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("Should fail with error")
+                case .failure(let error):
+                    XCTAssertEqual(error, Auth.Error.urlError(URLError(.badURL)), "Error should be from session")
+                    firstFetchFinished.fulfill() // success
+                }
+            }, receiveValue: { _ in
+                XCTFail("Should fail with error and not receive a response")
+            })
+
+        wait(for: [firstFetchFinished], timeout: 1)
+
+        let secondFetchFinished = XCTestExpectation(description: "Second fetch request finished")
+
+        cancellable = auth.fetch(request)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    XCTFail("Should fail with error")
+                case .failure(let error):
+                    XCTAssertEqual(error, Auth.Error.urlError(URLError(.badURL)), "Error should be from session")
+                    secondFetchFinished.fulfill() // success
+                }
+            }, receiveValue: { _ in
+                XCTFail("Should fail with error and not receive a response")
+            })
+
+        wait(for: [secondFetchFinished], timeout: 1)
+
+        XCTAssertEqual(signRequestPassthrough.callCount, 2, "should have signed each request once")
+    }
+
     static var allTests = [
         ("testSignInSuccessful", testSignInSuccessful),
-        ("testFetchSuccessful", testFetchSuccessful),
-        ("testFetchWhenNotSignedInFails", testFetchWhenNotSignedInFails),
-        ("testFetchRefreshSuccessful", testFetchRefreshSuccessful),
-        ("testFetchWithExpiredRefreshTokenFails", testFetchWithExpiredRefreshTokenFails),
         ("testSignInFails", testSignInFails),
+
+        ("testFetchSuccessful", testFetchSuccessful),
+        ("testFetchRefreshSuccessful", testFetchRefreshSuccessful),
+        ("testFetchWhenNotSignedInFails", testFetchWhenNotSignedInFails),
+        ("testFetchWithExpiredRefreshTokenFails", testFetchWithExpiredRefreshTokenFails),
+        ("testFetchWithSessionFailFails", testFetchWithSessionFailFails),
+
         ("testTwoFetchesSucceessful", testTwoFetchesSucceessful),
         ("testTwoFetchRefreshesSuccessful", testTwoFetchRefreshesSuccessful),
         ("testTwoFailedFetchesBothFail", testTwoFailedFetchesBothFail),
+        ("testTwoSessionFailedFetchesBothFail", testTwoSessionFailedFetchesBothFail),
     ]
 }
 
