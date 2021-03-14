@@ -55,7 +55,6 @@ extension Auth {
             .mapError { _ in Error.tokenExpired }
             .map { $0 as Tokens? }
             .replaceError(with: nil)
-            .first()
             .sink(receiveValue: saveInSubjects)
     }
 
