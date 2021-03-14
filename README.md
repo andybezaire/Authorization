@@ -13,7 +13,7 @@ TBD
 Add the following dependency to your **Package.swift** file:
 
 ```swift
-.package(url: "https://github.com/TBD, from: "0.0")
+.package(url: "https://github.com/andybezaire/Authentication.git", from: "1.0")
 ```
 ## License
 
