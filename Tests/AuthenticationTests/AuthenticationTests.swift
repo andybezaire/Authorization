@@ -144,3 +144,20 @@ extension Auth.Error: Equatable {
 enum TestError: Error {
     case fail, canBeAnyError
 }
+
+import Mocker
+/// allows mocks to change per request from an array of mocks
+extension Mock {
+    init(sequentialMocks: [Mock]) {
+        let mock: Mock? = sequentialMocks.reversed().reduce(nil) { acc, mock in
+            var modifiedMock = mock
+            if let nextMock = acc {
+                modifiedMock.completion = {
+                    nextMock.register()
+                }
+            }
+            return modifiedMock
+        }
+        self = mock!
+    }
+}
