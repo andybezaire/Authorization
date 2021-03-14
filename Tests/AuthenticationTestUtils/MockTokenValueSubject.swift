@@ -1,5 +1,5 @@
 //
-//  MockSubject.swift
+//  MockTokenValueSubject.swift
 //
 //
 //  Created by Andy Bezaire on 13.3.2021.
