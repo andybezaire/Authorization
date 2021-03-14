@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-extension Auth {
+public extension Auth {
     /// sign in and get tokens.
     /// - Returns: publisher that never sends a value only a completion with error if fail
     func signIn() -> AnyPublisher<Void, Error> {

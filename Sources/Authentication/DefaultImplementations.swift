@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Auth {
+public extension Auth {
     /// Default implementation for `shouldDoRefreshFor`.
     /// - will return true if http response status code is 403
     static let isResponseCode403: (_ forResult: URLResult) -> Bool = { result in

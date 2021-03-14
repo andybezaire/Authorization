@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 extension Auth {
-    func fetch(_ request: URLRequest) -> AnyPublisher<URLResult, Error> {
+    public func fetch(_ request: URLRequest) -> AnyPublisher<URLResult, Error> {
         token
             .tryMap(tryUnwrapToken)
             .mapError(toAuthError)
@@ -35,7 +35,7 @@ extension Auth {
         }
     }
 
-    func fetchURLResultForRequest(request: URLRequest) -> AnyPublisher<URLResult, Error> {
+    private func fetchURLResultForRequest(request: URLRequest) -> AnyPublisher<URLResult, Error> {
         URLSession.shared.dataTaskPublisher(for: request)
             .mapError { Error.urlError($0) }
             .eraseToAnyPublisher()

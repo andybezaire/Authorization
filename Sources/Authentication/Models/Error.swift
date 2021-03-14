@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Auth {
+public extension Auth {
     enum Error: Swift.Error {
         case signInFailed(Swift.Error)
         case tokenExpired

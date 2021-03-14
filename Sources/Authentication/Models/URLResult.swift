@@ -7,6 +7,6 @@
 
 import Foundation
 
-extension Auth {
+public extension Auth {
     typealias URLResult = (data: Data, response: URLResponse)
 }

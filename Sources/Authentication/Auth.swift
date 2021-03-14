@@ -9,7 +9,7 @@ import Combine
 import Foundation
 
 public class Auth {
-    init(
+    public init(
         doGetTokens: @escaping () -> AnyPublisher<Tokens, Swift.Error>,
         doRefreshToken: @escaping (_ refresh: Refresh) -> AnyPublisher<Tokens, Swift.Error>,
         signRequest: @escaping (_ request: URLRequest, _ token: Token) -> URLRequest = Auth.signedWithBearerToken,

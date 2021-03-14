@@ -7,12 +7,16 @@
 
 import Foundation
 
-extension Auth {
+public extension Auth {
     typealias Token = String
     typealias Refresh = String
 
     struct Tokens {
-        let token: Token
-        let refresh: Refresh?
+        public let token: Token
+        public let refresh: Refresh?
+        public init(token: Token, refresh: Refresh?) {
+            self.token = token
+            self.refresh = refresh
+        }
     }
 }
