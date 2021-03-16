@@ -17,6 +17,10 @@ extension Auth {
             .flatMap(fetchURLResultForRequest)
             .flatMap(refreshTokensIfNeeded)
             .first()
+            .log(to: logger, prefix: "Fetch \(request.description)") { logger, result in
+                let code = (result.response as? HTTPURLResponse)?.statusCode ?? -1
+                logger.log("Fetch \(request.description) response code \(code)")
+            }
             .eraseToAnyPublisher()
     }
 

@@ -28,6 +28,10 @@ public extension Auth {
                     }
                 }
             )
+            .log(to: logger, prefix: "SignIn") { logger, output in
+                logger.log("SignIn got token \(output.token, privacy: .private)")
+                logger.log("SignIn got refresh \(output.refresh ?? "nil", privacy: .private)")
+            }
             .flatMap { _ in Empty<Void, Error>().eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }
