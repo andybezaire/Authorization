@@ -18,7 +18,8 @@ final class SignInTests: AuthenticationTests {
             signRequest: signRequestUnused(),
             shouldDoRefreshFor: shouldDoRefreshForUnused(),
             tokenSubject: token,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         cancellable = auth.signIn()
@@ -52,7 +53,8 @@ final class SignInTests: AuthenticationTests {
             signRequest: signRequestUnused(),
             shouldDoRefreshFor: shouldDoRefreshForUnused(),
             tokenSubject: token,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         cancellable = auth.signIn()
