@@ -1,5 +1,12 @@
-# Authentication
 
+# Authentication
+<p>
+  <img src="https://img.shields.io/badge/Swift-5.3-brightgreen.svg" />
+  <img src="https://img.shields.io/github/license/andybezaire/Authentication" />
+  <img src="https://img.shields.io/github/issues/andybezaire/Authentication" />
+  <img src="https://img.shields.io/github/forks/andybezaire/Authentication" />
+  <img src="https://img.shields.io/github/stars/andybezaire/Authentication" />
+</p>
 A description of this package.
 
 ## Usage
