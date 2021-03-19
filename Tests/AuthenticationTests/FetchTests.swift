@@ -19,7 +19,8 @@ final class FetchTests: AuthenticationTests {
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForNever(),
             tokenSubject: validToken,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
@@ -54,7 +55,8 @@ final class FetchTests: AuthenticationTests {
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForFirstTimeOnly(),
             tokenSubject: validToken,
-            refreshSubject: validRefresh
+            refreshSubject: validRefresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
@@ -92,7 +94,8 @@ final class FetchTests: AuthenticationTests {
             signRequest: signRequestUnused(),
             shouldDoRefreshFor: shouldDoRefreshForUnused(),
             tokenSubject: token,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         cancellable = auth.fetch(request)
@@ -118,7 +121,8 @@ final class FetchTests: AuthenticationTests {
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForFirstTimeOnly(),
             tokenSubject: validToken,
-            refreshSubject: validRefresh
+            refreshSubject: validRefresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
@@ -155,7 +159,8 @@ final class FetchTests: AuthenticationTests {
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForUnused(),
             tokenSubject: validToken,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 999, data: [.get: Data()], requestError: URLError(.badURL))

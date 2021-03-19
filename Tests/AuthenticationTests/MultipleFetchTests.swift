@@ -17,7 +17,8 @@ final class MultipleFetchTests: AuthenticationTests {
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForNever(),
             tokenSubject: validToken,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
@@ -63,7 +64,8 @@ final class MultipleFetchTests: AuthenticationTests {
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshEveryOtherTime(),
             tokenSubject: validToken,
-            refreshSubject: validRefresh
+            refreshSubject: validRefresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()])
@@ -112,7 +114,8 @@ final class MultipleFetchTests: AuthenticationTests {
             signRequest: signRequestUnused(),
             shouldDoRefreshFor: shouldDoRefreshForUnused(),
             tokenSubject: token,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 999, data: [.get: Data()], requestError: URLError(.badURL))
@@ -160,7 +163,8 @@ final class MultipleFetchTests: AuthenticationTests {
             signRequest: signRequestPassthrough(),
             shouldDoRefreshFor: shouldDoRefreshForUnused(),
             tokenSubject: validToken,
-            refreshSubject: refresh
+            refreshSubject: refresh,
+            logger: logger
         )
 
         Mock(url: url, dataType: .json, statusCode: 999, data: [.get: Data()], requestError: URLError(.badURL))

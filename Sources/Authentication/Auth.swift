@@ -6,7 +6,9 @@
 //
 
 import Combine
+import CombineExtras
 import Foundation
+import os.log
 
 public class Auth {
     public init(
@@ -15,7 +17,8 @@ public class Auth {
         signRequest: @escaping (_ request: URLRequest, _ token: Token) -> URLRequest = Auth.signedWithBearerToken,
         shouldDoRefreshFor: @escaping (_ result: URLResult) -> Bool = Auth.isResponseCode403,
         tokenSubject: TokenValueSubject<Token?, Never> = TokenValueSubject<Token?, Never>(nil),
-        refreshSubject: TokenValueSubject<Refresh?, Never> = TokenValueSubject<Refresh?, Never>(nil)
+        refreshSubject: TokenValueSubject<Refresh?, Never> = TokenValueSubject<Refresh?, Never>(nil),
+        logger: Logger? = nil
     ) {
         self.doGetTokens = doGetTokens
         self.doRefreshToken = doRefreshToken
@@ -23,6 +26,7 @@ public class Auth {
         self.shouldDoRefreshFor = shouldDoRefreshFor
         self.tokenSubject = tokenSubject
         self.refreshSubject = refreshSubject
+        self.logger = logger
     }
 
     let doGetTokens: () -> AnyPublisher<Tokens, Swift.Error>
@@ -42,6 +46,8 @@ public class Auth {
             .eraseToAnyPublisher()
     }
 
+    var logger: Logger?
+
     private var refreshingToken: AnyCancellable?
 }
 
@@ -55,6 +61,10 @@ extension Auth {
             .mapError { _ in Error.tokenExpired }
             .map { $0 as Tokens? }
             .replaceError(with: nil)
+            .log(to: logger, prefix: "Fetch Refresh") { logger, output in
+                logger.log("Fetch Refresh got token: \(output?.token ?? "nil", privacy: .private)")
+                logger.log("Fetch Refresh got refresh: \(output?.refresh ?? "nil", privacy: .private)")
+            }
             .sink(receiveValue: saveInSubjects)
     }
 

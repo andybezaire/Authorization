@@ -15,7 +15,8 @@ final class UseCaseTests: AuthenticationTests {
 
         let auth = Auth(
             doGetTokens: getTokensSuccess(),
-            doRefreshToken: refreshTokenUnused()
+            doRefreshToken: refreshTokenUnused(),
+            logger: logger
         )
 
         cancellable = auth.signIn()
@@ -59,7 +60,8 @@ final class UseCaseTests: AuthenticationTests {
 
         let auth = Auth(
             doGetTokens: getTokensSuccess(),
-            doRefreshToken: refreshTokenSuccess()
+            doRefreshToken: refreshTokenSuccess(),
+            logger: logger
         )
 
         cancellable = auth.signIn()
@@ -146,7 +148,8 @@ final class UseCaseTests: AuthenticationTests {
 
         let auth = Auth(
             doGetTokens: getTokensSuccess(),
-            doRefreshToken: refreshTokenSuccess()
+            doRefreshToken: refreshTokenSuccess(),
+            logger: logger
         )
 
         cancellable = auth.signIn()

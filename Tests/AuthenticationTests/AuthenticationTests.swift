@@ -1,6 +1,7 @@
 @testable import Authentication
 import AuthenticationTestUtils
 import Combine
+import os.log
 import XCTest
 
 class AuthenticationTests: XCTestCase {
@@ -30,6 +31,8 @@ class AuthenticationTests: XCTestCase {
     var validToken: MockTokenValueSubject<String?, Never>!
     var refresh: MockTokenValueSubject<String?, Never>!
     var validRefresh: MockTokenValueSubject<String?, Never>!
+
+    let logger = Logger(subsystem: "com.example.authentication", category: "AuthenticationTests")
 
     var cancellable: AnyCancellable?
 
