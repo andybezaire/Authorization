@@ -41,6 +41,7 @@ public extension Auth {
     /// - Returns: publisher that never sends a value only a completion with error if fail
     /// current implementation never fails
     func signOut() -> AnyPublisher<Void, Error> {
+        _status = .signingOut
         return Just(())
             .mapError { Error.signOutFailed($0) }
             .handleEvents(

@@ -130,6 +130,35 @@ final class StatusTests: AuthenticationTests {
         XCTAssertEqual(refreshOnce, 1, "should have signed in exactly once")
     }
 
+    func testSignOutSuccessful() {
+        let signOutFinished = XCTestExpectation(description: "Sign out finished")
+
+        let auth = Auth(
+            doGetTokens: getTokensUnused(),
+            doRefreshToken: refreshTokenUnused(),
+            signRequest: signRequestUnused(),
+            shouldDoRefreshFor: shouldDoRefreshForUnused(),
+            tokenSubject: validToken,
+            refreshSubject: validRefresh,
+            logger: logger
+        )
+        
+        var statuses = [Auth.Status]()
+        statusCancellable = auth.status
+            .sink { status in
+                statuses.append(status)
+            }
+
+        cancellable = auth.signOut()
+            .sink(receiveCompletion: { _ in signOutFinished.fulfill() }, receiveValue: { _ in })
+
+        wait(for: [signOutFinished], timeout: 1)
+
+        let signOutOnce = statuses.filter { $0 == .signingOut }.count
+        XCTAssertEqual(signOutOnce, 1, "should have signed in exactly once")
+        XCTAssertEqual(statuses.last, .notSignedIn, "should not be signed in")
+    }
+
     #if !canImport(ObjectiveC)
     static var allTests: [XCTestCaseEntry] = [
         ("testSignInSuccessful", testSignInSuccessful),
