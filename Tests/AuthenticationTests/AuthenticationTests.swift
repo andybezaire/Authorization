@@ -10,6 +10,7 @@ class AuthenticationTests: XCTestCase {
 
     var getTokensSuccess: MockFunction0<AnyPublisher<Auth.Tokens, Error>>!
     var getTokensFail: MockFunction0<AnyPublisher<Auth.Tokens, Error>>!
+    var getTokensNoRefresh: MockFunction0<AnyPublisher<Auth.Tokens, Error>>!
     var getTokensUnused: MockFunction0<AnyPublisher<Auth.Tokens, Error>>!
 
     var refreshTokenSuccess: MockFunction1<String, AnyPublisher<Auth.Tokens, Error>>!
@@ -35,6 +36,7 @@ class AuthenticationTests: XCTestCase {
     let logger = Logger(subsystem: "com.example.authentication", category: "AuthenticationTests")
 
     var cancellable: AnyCancellable?
+    var statusCancellable: AnyCancellable?
 
     override func setUp() {
         // MARK: - doGetTokens mocks
@@ -47,6 +49,12 @@ class AuthenticationTests: XCTestCase {
 
         getTokensFail = MockFunction0 {
             Fail(error: TestError.fail)
+                .eraseToAnyPublisher()
+        }
+
+        getTokensNoRefresh = MockFunction0 {
+            Just(Auth.Tokens(token: "TOKEN", refresh: nil))
+                .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
 

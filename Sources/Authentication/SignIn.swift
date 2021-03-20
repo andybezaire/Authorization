@@ -12,7 +12,8 @@ public extension Auth {
     /// sign in and get tokens.
     /// - Returns: publisher that never sends a value only a completion with error if fail
     func signIn() -> AnyPublisher<Void, Error> {
-        doGetTokens()
+        _status = .signingIn
+        return doGetTokens()
             .mapError { Error.signInFailed($0) }
             .handleEvents(
                 receiveOutput: {
