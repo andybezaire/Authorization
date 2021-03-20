@@ -134,6 +134,8 @@ final class StatusTests: AuthenticationTests {
     static var allTests: [XCTestCaseEntry] = [
         ("testSignInSuccessful", testSignInSuccessful),
         ("testSignInFails", testSignInFails),
+        ("testSignInNoRefresh", testSignInNoRefresh),
+        ("testFetchRefreshSuccessful", testFetchRefreshSuccessful),
     ]
     #endif
 }

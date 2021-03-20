@@ -16,16 +16,16 @@ public extension Auth {
         return doGetTokens()
             .mapError { Error.signInFailed($0) }
             .handleEvents(
-                receiveOutput: {
-                    self.tokenSubject.send($0.token)
-                    self.refreshSubject.send($0.refresh)
+                receiveOutput: { [unowned self] in
+                    tokenSubject.send($0.token)
+                    refreshSubject.send($0.refresh)
                 },
-                receiveCompletion: {
+                receiveCompletion: { [unowned self] in
                     switch $0 {
                     case .finished: break
                     case .failure:
-                        self.tokenSubject.send(nil)
-                        self.refreshSubject.send(nil)
+                        tokenSubject.send(nil)
+                        refreshSubject.send(nil)
                     }
                 }
             )
