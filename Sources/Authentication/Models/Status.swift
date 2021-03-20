@@ -9,6 +9,6 @@ import Foundation
 
 public extension Auth {
     enum Status {
-        case signedIn, signedInNoRefresh, notSignedIn, signingIn, refreshingToken
+        case signedIn, signedInNoRefresh, notSignedIn, signingIn, refreshingToken, signingOut
     }
 }
