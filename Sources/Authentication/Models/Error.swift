@@ -12,6 +12,7 @@ public extension Auth {
         case signInFailed(Swift.Error)
         case tokenExpired
         case urlError(URLError)
+        case signOutFailed(Swift.Error)
         case unknown
     }
 }
