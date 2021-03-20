@@ -79,10 +79,43 @@ final class SignInTests: AuthenticationTests {
         XCTAssertNil(refresh.value, "refresh should have been cleared to nil")
     }
 
+    func testSignOutSuccessful() {
+        let signOutFinished = XCTestExpectation(description: "Sign out finished")
+
+        let auth = Auth(
+            doGetTokens: getTokensUnused(),
+            doRefreshToken: refreshTokenUnused(),
+            signRequest: signRequestUnused(),
+            shouldDoRefreshFor: shouldDoRefreshForUnused(),
+            tokenSubject: validToken,
+            refreshSubject: validRefresh,
+            logger: logger
+        )
+
+        cancellable = auth.signOut()
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break // success
+                case .failure:
+                    XCTFail("Sign out should succeed")
+                }
+                signOutFinished.fulfill()
+            }, receiveValue: { _ in
+                XCTFail("Sign out should not receive value")
+            })
+
+        wait(for: [signOutFinished], timeout: 1)
+
+        XCTAssertNil(token.value, "should have gotten cleared")
+        XCTAssertNil(refresh.value, "should have gotten cleared")
+    }
+
     #if !canImport(ObjectiveC)
     static var allTests: [XCTestCaseEntry] = [
         ("testSignInSuccessful", testSignInSuccessful),
         ("testSignInFails", testSignInFails),
+        ("testSignOutSuccessful", testSignOutSuccessful),
     ]
     #endif
 }
