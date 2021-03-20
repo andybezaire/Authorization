@@ -50,7 +50,7 @@ public extension Auth {
                     refreshSubject.send(nil)
                 }
             )
-            .log(to: logger, prefix: "SignOut") { _, _ in }
+            .log(to: logger, prefix: "SignOut")
             .flatMap { _ in Empty<Void, Error>().eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }
