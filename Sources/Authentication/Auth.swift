@@ -27,6 +27,8 @@ public class Auth {
         self.tokenSubject = tokenSubject
         self.refreshSubject = refreshSubject
         self.logger = logger
+
+        assignStatusFromTokens()
     }
 
     let doGetTokens: () -> AnyPublisher<Tokens, Swift.Error>
@@ -46,6 +48,9 @@ public class Auth {
             .eraseToAnyPublisher()
     }
 
+    @Published internal var _status: Status = .notSignedIn
+    public var status: AnyPublisher<Status, Never> { $_status.eraseToAnyPublisher() }
+
     var logger: Logger?
 
     private var refreshingToken: AnyCancellable?
@@ -55,6 +60,7 @@ public class Auth {
 
 extension Auth {
     func refreshTokens() {
+        _status = .refreshingToken
         refreshingToken = Just(refreshSubject.value)
             .tryMap(tryUnwrapToken)
             .flatMap(doRefreshToken)
@@ -76,5 +82,25 @@ extension Auth {
     private func saveInSubjects(tokens: Tokens?) {
         tokenSubject.send(tokens?.token)
         refreshSubject.send(tokens?.refresh)
+    }
+}
+
+// MARK: - Status
+
+extension Auth {
+    func assignStatusFromTokens() {
+        token
+            .combineLatest(refresh)
+            .map { token, refresh in
+                switch (token, refresh) {
+                case (.none, _):
+                    return .notSignedIn
+                case (.some, .some):
+                    return .signedIn
+                case (.some, .none):
+                    return .signedInNoRefresh
+                }
+            }
+            .assign(to: &$_status)
     }
 }
