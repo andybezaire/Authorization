@@ -5,12 +5,18 @@
 //  Created by Andy Bezaire on 20.3.2021.
 //
 
+import Authentication
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject var model = Model()
+
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        VStack {
+            Text("Status: \(model.status)")
+            Button("Sign in...", action: model.signIn)
+            Button("Sign out...", action: model.signOut)
+        }
     }
 }
 

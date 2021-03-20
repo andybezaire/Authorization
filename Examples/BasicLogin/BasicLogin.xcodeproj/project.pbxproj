@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -13,6 +13,8 @@
 		A1E6E71E2605FC8800A62CB5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1E6E71D2605FC8800A62CB5 /* Preview Assets.xcassets */; };
 		A1E6E7292605FC8800A62CB5 /* BasicLoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7282605FC8800A62CB5 /* BasicLoginTests.swift */; };
 		A1E6E7342605FC8800A62CB5 /* BasicLoginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7332605FC8800A62CB5 /* BasicLoginUITests.swift */; };
+		A1E6E74C260605D400A62CB5 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = A1E6E74B260605D400A62CB5 /* Authentication */; };
+		A1E6E751260606C100A62CB5 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E750260606C100A62CB5 /* ContentViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +47,7 @@
 		A1E6E72F2605FC8800A62CB5 /* BasicLoginUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BasicLoginUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1E6E7332605FC8800A62CB5 /* BasicLoginUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLoginUITests.swift; sourceTree = "<group>"; };
 		A1E6E7352605FC8800A62CB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1E6E750260606C100A62CB5 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1E6E74C260605D400A62CB5 /* Authentication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,6 +101,7 @@
 			children = (
 				A1E6E7162605FC8700A62CB5 /* BasicLoginApp.swift */,
 				A1E6E7182605FC8700A62CB5 /* ContentView.swift */,
+				A1E6E750260606C100A62CB5 /* ContentViewModel.swift */,
 				A1E6E71A2605FC8800A62CB5 /* Assets.xcassets */,
 				A1E6E71F2605FC8800A62CB5 /* Info.plist */,
 				A1E6E71C2605FC8800A62CB5 /* Preview Content */,
@@ -146,6 +151,9 @@
 			dependencies = (
 			);
 			name = BasicLogin;
+			packageProductDependencies = (
+				A1E6E74B260605D400A62CB5 /* Authentication */,
+			);
 			productName = BasicLogin;
 			productReference = A1E6E7132605FC8700A62CB5 /* BasicLogin.app */;
 			productType = "com.apple.product-type.application";
@@ -217,6 +225,9 @@
 				Base,
 			);
 			mainGroup = A1E6E70A2605FC8700A62CB5;
+			packageReferences = (
+				A1E6E74A260605D400A62CB5 /* XCRemoteSwiftPackageReference "Authentication" */,
+			);
 			productRefGroup = A1E6E7142605FC8700A62CB5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -261,6 +272,7 @@
 			files = (
 				A1E6E7192605FC8700A62CB5 /* ContentView.swift in Sources */,
 				A1E6E7172605FC8700A62CB5 /* BasicLoginApp.swift in Sources */,
+				A1E6E751260606C100A62CB5 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -574,6 +586,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1E6E74A260605D400A62CB5 /* XCRemoteSwiftPackageReference "Authentication" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/andybezaire/Authentication.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.7.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1E6E74B260605D400A62CB5 /* Authentication */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1E6E74A260605D400A62CB5 /* XCRemoteSwiftPackageReference "Authentication" */;
+			productName = Authentication;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = A1E6E70B2605FC8700A62CB5 /* Project object */;
 }
