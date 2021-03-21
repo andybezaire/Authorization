@@ -10,7 +10,8 @@ import Foundation
 
 extension Auth {
     func refreshTokens() {
-        _status = .refreshingToken
+        _status.send(.refreshingToken)
+
         refreshingToken = Just(refreshSubject.value)
             .tryMap(tryUnwrapToken)
             .flatMap(doRefreshToken)

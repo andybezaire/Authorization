@@ -57,10 +57,12 @@ public class Auth {
             .eraseToAnyPublisher()
     }
 
-    @Published internal var _status: Status = .notSignedIn
-    public var status: AnyPublisher<Status, Never> { $_status.eraseToAnyPublisher() }
+    internal let _status = CurrentValueSubject<Status, Never>(.notSignedIn)
+    public var status: AnyPublisher<Status, Never> { _status.eraseToAnyPublisher() }
 
     var logger: Logger?
 
     internal var refreshingToken: AnyCancellable?
+
+    internal var updatingStatusFromTokens: AnyCancellable?
 }
