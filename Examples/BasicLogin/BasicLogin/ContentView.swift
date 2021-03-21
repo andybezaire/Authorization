@@ -11,14 +11,23 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var model = Model()
 
+    @State var isNetworkFailures = false
+    @State var isTokenExpired = false
+
     var body: some View {
         NavigationView {
             VStack {
-                Spacer()
-                SignInStatus(status: model.status, isSignedIn: model.isSignedIn)
-                Spacer()
+                Form {
+                    SignInStatus(status: model.status, isSignedIn: model.isSignedIn)
+                    Section(header: Text("Fetch Options")) {
+                        Toggle("Network failures", isOn: $isNetworkFailures)
+                        Toggle("Token expired", isOn: $isTokenExpired)
+                    }
+                    FetchStatus(status: nil)
+                }
                 Text(errorText)
                     .font(.callout)
+                    .foregroundColor(.red)
             }
             .toolbar {
                 if model.isSignedIn {
@@ -27,6 +36,7 @@ struct ContentView: View {
                     Button("Sign in...", action: model.signIn)
                 }
             }
+            .navigationTitle("Authentication")
         }
         .sheet(item: $model.callback) {
             LoginSheet(callback: $0)
@@ -49,10 +59,26 @@ struct SignInStatus: View {
                 .foregroundColor(.secondary)
             Text("Status: \(status)")
         }
+        .frame(maxWidth: .infinity)
     }
 
     var profileImage: String {
         isSignedIn ? "person.crop.circle.fill.badge.checkmark" : "person.crop.circle.badge.xmark"
+    }
+}
+
+struct FetchStatus: View {
+    let status: String?
+    var body: some View {
+        VStack {
+            Text(fetchStatus)
+            Button("Fetch", action: {})
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    var fetchStatus: String {
+        status.map { $0 } ?? " "
     }
 }
 
