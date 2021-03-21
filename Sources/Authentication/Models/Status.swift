@@ -32,3 +32,22 @@ extension Auth {
             }
     }
 }
+
+extension Auth.Status: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .signedIn:
+            return "Signed in."
+        case .signedInNoRefresh:
+            return "Signed in (No refresh)."
+        case .notSignedIn:
+            return "NOT signed in"
+        case .signingIn:
+            return "Signing in..."
+        case .refreshingToken:
+            return "Refreshing token..."
+        case .signingOut:
+            return "Signing out..."
+        }
+    }
+}
