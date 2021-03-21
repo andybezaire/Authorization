@@ -11,19 +11,16 @@ import SwiftUI
 struct ContentView: View {
     @StateObject var model = Model()
 
-    @State var isNetworkFailures = false
-    @State var isTokenExpired = false
-
     var body: some View {
         NavigationView {
             VStack {
                 Form {
                     SignInStatus(status: model.status, isSignedIn: model.isSignedIn)
                     Section(header: Text("Fetch Options")) {
-                        Toggle("Network failures", isOn: $isNetworkFailures)
-                        Toggle("Token expired", isOn: $isTokenExpired)
+                        Toggle("Network failures", isOn: $model.isNetworkFailures)
+                        Toggle("Token expired", isOn: $model.isTokenExpired)
                     }
-                    FetchStatus(status: nil)
+                    FetchStatus(status: model.fetchStatus)
                 }
                 Text(errorText)
                     .font(.callout)

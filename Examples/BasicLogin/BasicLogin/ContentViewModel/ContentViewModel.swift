@@ -33,6 +33,11 @@ extension ContentView {
             _status == .signedIn || _status == .signedInNoRefresh || _status == .refreshingToken
         }
 
+        @Published var isNetworkFailures = false
+        @Published var isTokenExpired = false
+
+        @Published var fetchStatus: String?
+
         init() {
             auth.status
                 .assign(to: &$_status)
