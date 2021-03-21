@@ -20,7 +20,7 @@ struct ContentView: View {
                         Toggle("Network failures", isOn: $model.isNetworkFailures)
                         Toggle("Token expired", isOn: $model.isTokenExpired)
                     }
-                    FetchStatus(status: model.fetchStatus)
+                    FetchStatus(status: model.fetchStatus, doFetch: model.fetch)
                 }
                 Text(errorText)
                     .font(.callout)
@@ -66,10 +66,11 @@ struct SignInStatus: View {
 
 struct FetchStatus: View {
     let status: String?
+    let doFetch: () -> Void
     var body: some View {
         VStack {
             Text(fetchStatus)
-            Button("Fetch", action: {})
+            Button("Fetch", action: doFetch)
         }
         .frame(maxWidth: .infinity)
     }

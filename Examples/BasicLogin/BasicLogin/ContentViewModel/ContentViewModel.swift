@@ -33,6 +33,8 @@ extension ContentView {
             _status == .signedIn || _status == .signedInNoRefresh || _status == .refreshingToken
         }
 
+        internal var fetching: AnyCancellable?
+
         @Published var isNetworkFailures = false
         @Published var isTokenExpired = false
 
