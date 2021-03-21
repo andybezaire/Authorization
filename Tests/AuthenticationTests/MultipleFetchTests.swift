@@ -144,7 +144,7 @@ final class MultipleFetchTests: AuthenticationTests {
             .sink { completion in
                 switch completion {
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.tokenExpired, "Error should be token expired")
+                    XCTAssertEqual(error, Auth.Error.tokenNil, "Error should be token nil")
                 case .finished:
                     XCTFail("Fetch should complete with error")
                 }

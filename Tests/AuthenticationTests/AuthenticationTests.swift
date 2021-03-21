@@ -142,6 +142,8 @@ extension Auth.Error: Equatable {
             return true
         case (.tokenExpired, .tokenExpired):
             return true
+        case (.tokenNil, .tokenNil):
+            return true
         case (.unknown, .unknown):
             return true
         case (.urlError(_), .urlError(_)):

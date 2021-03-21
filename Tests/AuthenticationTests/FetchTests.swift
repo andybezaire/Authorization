@@ -104,7 +104,7 @@ final class FetchTests: AuthenticationTests {
                 case .finished:
                     XCTFail("Fetch should complete with error")
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.tokenExpired, "Error should be token expired")
+                    XCTAssertEqual(error, Auth.Error.tokenNil, "Error should be token nil")
                 }
                 requestFinished.fulfill()
             }, receiveValue: { _ in

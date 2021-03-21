@@ -29,7 +29,7 @@ extension Auth {
     }
 
     func tryUnwrapToken(optToken: String?) throws -> String {
-        guard let token = optToken else { throw Error.tokenExpired }
+        guard let token = optToken else { throw Error.tokenNil }
         return token
     }
 
