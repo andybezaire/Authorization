@@ -15,6 +15,8 @@
 		A1E6E7342605FC8800A62CB5 /* BasicLoginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7332605FC8800A62CB5 /* BasicLoginUITests.swift */; };
 		A1E6E74C260605D400A62CB5 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = A1E6E74B260605D400A62CB5 /* Authentication */; };
 		A1E6E751260606C100A62CB5 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E750260606C100A62CB5 /* ContentViewModel.swift */; };
+		A1E6E75A26060E5900A62CB5 /* SignInOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E75926060E5900A62CB5 /* SignInOut.swift */; };
+		A1E6E75F260610B300A62CB5 /* DoGetTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E75E260610B300A62CB5 /* DoGetTokens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		A1E6E7332605FC8800A62CB5 /* BasicLoginUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLoginUITests.swift; sourceTree = "<group>"; };
 		A1E6E7352605FC8800A62CB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A1E6E750260606C100A62CB5 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		A1E6E75926060E5900A62CB5 /* SignInOut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInOut.swift; sourceTree = "<group>"; };
+		A1E6E75E260610B300A62CB5 /* DoGetTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoGetTokens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +105,7 @@
 			children = (
 				A1E6E7162605FC8700A62CB5 /* BasicLoginApp.swift */,
 				A1E6E7182605FC8700A62CB5 /* ContentView.swift */,
-				A1E6E750260606C100A62CB5 /* ContentViewModel.swift */,
+				A1E6E75826060E3B00A62CB5 /* ContentViewModel */,
 				A1E6E71A2605FC8800A62CB5 /* Assets.xcassets */,
 				A1E6E71F2605FC8800A62CB5 /* Info.plist */,
 				A1E6E71C2605FC8800A62CB5 /* Preview Content */,
@@ -133,6 +137,16 @@
 				A1E6E7352605FC8800A62CB5 /* Info.plist */,
 			);
 			path = BasicLoginUITests;
+			sourceTree = "<group>";
+		};
+		A1E6E75826060E3B00A62CB5 /* ContentViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A1E6E750260606C100A62CB5 /* ContentViewModel.swift */,
+				A1E6E75926060E5900A62CB5 /* SignInOut.swift */,
+				A1E6E75E260610B300A62CB5 /* DoGetTokens.swift */,
+			);
+			path = ContentViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +286,8 @@
 			files = (
 				A1E6E7192605FC8700A62CB5 /* ContentView.swift in Sources */,
 				A1E6E7172605FC8700A62CB5 /* BasicLoginApp.swift in Sources */,
+				A1E6E75A26060E5900A62CB5 /* SignInOut.swift in Sources */,
+				A1E6E75F260610B300A62CB5 /* DoGetTokens.swift in Sources */,
 				A1E6E751260606C100A62CB5 /* ContentViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
