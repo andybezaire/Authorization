@@ -30,18 +30,7 @@ extension ContentView.Model {
     private func handle(completion: Subscribers.Completion<Auth.Error>) {
         switch completion {
         case .failure(let authError):
-            switch authError {
-            case .signInFailed:
-                error = "Sign in failed!"
-            case .tokenExpired:
-                error = "Token expired!"
-            case .urlError:
-                error = "URL Error!"
-            case .signOutFailed:
-                error = "Sign out failed!"
-            case .unknown:
-                error = "Unknown error!!!"
-            }
+            error = authError.localizedDescription
         case .finished:
             error = nil
         }

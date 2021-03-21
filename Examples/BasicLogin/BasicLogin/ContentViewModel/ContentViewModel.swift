@@ -47,22 +47,3 @@ extension ContentView {
         }
     }
 }
-
-extension Auth.Status: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .signedIn:
-            return "Signed in."
-        case .signedInNoRefresh:
-            return "Signed in (no refresh)."
-        case .notSignedIn:
-            return "NOT signed in."
-        case .signingIn:
-            return "signing in..."
-        case .refreshingToken:
-            return "refreshing token..."
-        case .signingOut:
-            return "signing out..."
-        }
-    }
-}

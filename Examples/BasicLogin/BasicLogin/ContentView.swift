@@ -106,10 +106,21 @@ struct LoginSheet: View {
     }
 }
 
-enum LoginError: Error {
+enum LoginError: LocalizedError {
     case cancelled
     case interrupted
     case noRefresh
+
+    var errorDescription: String? {
+        switch self {
+        case .cancelled:
+            return "Cancelled."
+        case .interrupted:
+            return "Interrupted."
+        case .noRefresh:
+            return "No refresh."
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
