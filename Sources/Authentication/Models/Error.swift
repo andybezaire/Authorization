@@ -16,3 +16,20 @@ public extension Auth {
         case unknown
     }
 }
+
+extension Auth.Error: LocalizedError {
+    public var errorDescription: String? {
+            switch self {
+            case .signInFailed(let error):
+                return "Sign in failed (\(error.localizedDescription))."
+            case .tokenExpired:
+                return "Token expired."
+            case .urlError(let error):
+                return "Request failed (\(error.localizedDescription))."
+            case .signOutFailed(let error):
+                return "Sign out failed (\(error.localizedDescription))."
+            case .unknown:
+                return "Unknown error."
+            }
+        }
+}
