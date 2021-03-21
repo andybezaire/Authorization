@@ -42,6 +42,7 @@ extension ContentView {
 
         init() {
             auth.status
+                .receive(on: RunLoop.main)
                 .assign(to: &$_status)
         }
     }
@@ -64,6 +65,4 @@ extension Auth.Status: CustomStringConvertible {
             return "signing out..."
         }
     }
-
-
 }
