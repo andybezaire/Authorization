@@ -12,3 +12,21 @@ public extension Auth {
         case signedIn, signedInNoRefresh, notSignedIn, signingIn, refreshingToken, signingOut
     }
 }
+
+extension Auth {
+    func assignStatusFromTokens() {
+        token
+            .combineLatest(refresh)
+            .map { token, refresh in
+                switch (token, refresh) {
+                case (.none, _):
+                    return .notSignedIn
+                case (.some, .some):
+                    return .signedIn
+                case (.some, .none):
+                    return .signedInNoRefresh
+                }
+            }
+            .assign(to: &$_status)
+    }
+}
