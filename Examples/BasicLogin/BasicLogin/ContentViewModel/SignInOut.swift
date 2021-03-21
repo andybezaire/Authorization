@@ -13,6 +13,7 @@ import UIKit
 extension ContentView.Model {
     func signIn() {
         signInOut = auth.signIn()
+            .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] in
                 handle(completion: $0)
             }, receiveValue: { _ in })
@@ -20,6 +21,7 @@ extension ContentView.Model {
 
     func signOut() {
         signInOut = auth.signOut()
+            .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] in
                 handle(completion: $0)
             }, receiveValue: { _ in })

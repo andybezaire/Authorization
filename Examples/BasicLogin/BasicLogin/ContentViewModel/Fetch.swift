@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Mocker
 
 extension ContentView.Model {
     func fetch() {
@@ -13,7 +14,13 @@ extension ContentView.Model {
         let url = URL(string: "http://example.com")!
         let request = URLRequest(url: url)
 
+        Mock(sequentialMocks: [
+            Mock(url: url, dataType: .json, statusCode: 403, data: [.get: Data()]),
+            Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()]),
+        ])?.register()
+
         fetching = auth.fetch(request)
+            .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] completion in
                 switch completion {
                 case .failure:
