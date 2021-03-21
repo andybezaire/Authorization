@@ -48,59 +48,19 @@ public class Auth {
             .eraseToAnyPublisher()
     }
 
+    // This is used when a refresh fails, in order to propagate the error
+    internal let tokenError = PassthroughSubject<Void, Never>()
+    var tokenExpired: AnyPublisher<URLResult, Error> {
+        tokenError
+            .tryMap { _ in throw Error.tokenExpired }
+            .mapError { _ in Error.tokenExpired }
+            .eraseToAnyPublisher()
+    }
+
     @Published internal var _status: Status = .notSignedIn
     public var status: AnyPublisher<Status, Never> { $_status.eraseToAnyPublisher() }
 
     var logger: Logger?
 
-    private var refreshingToken: AnyCancellable?
-}
-
-// MARK: - Refresh
-
-extension Auth {
-    func refreshTokens() {
-        _status = .refreshingToken
-        refreshingToken = Just(refreshSubject.value)
-            .tryMap(tryUnwrapToken)
-            .flatMap(doRefreshToken)
-            .mapError { _ in Error.tokenExpired }
-            .map { $0 as Tokens? }
-            .replaceError(with: nil)
-            .log(to: logger, prefix: "Fetch Refresh") { logger, output in
-                logger.log("Fetch Refresh got token: \(output?.token ?? "nil", privacy: .private)")
-                logger.log("Fetch Refresh got refresh: \(output?.refresh ?? "nil", privacy: .private)")
-            }
-            .sink(receiveValue: saveInSubjects)
-    }
-
-    func tryUnwrapToken(optToken: String?) throws -> String {
-        guard let token = optToken else { throw Error.tokenExpired }
-        return token
-    }
-
-    private func saveInSubjects(tokens: Tokens?) {
-        tokenSubject.send(tokens?.token)
-        refreshSubject.send(tokens?.refresh)
-    }
-}
-
-// MARK: - Status
-
-extension Auth {
-    func assignStatusFromTokens() {
-        token
-            .combineLatest(refresh)
-            .map { token, refresh in
-                switch (token, refresh) {
-                case (.none, _):
-                    return .notSignedIn
-                case (.some, .some):
-                    return .signedIn
-                case (.some, .none):
-                    return .signedInNoRefresh
-                }
-            }
-            .assign(to: &$_status)
-    }
+    internal var refreshingToken: AnyCancellable?
 }

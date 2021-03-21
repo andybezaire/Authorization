@@ -148,8 +148,8 @@ final class FetchTests: AuthenticationTests {
         XCTAssertEqual(signRequestPassthrough.callCount, 1, "should have signed request once")
         XCTAssertEqual(shouldDoRefreshForFirstTimeOnly.callCount, 1, "should have checked to see if we need to refresh token once")
         XCTAssertEqual(refreshTokenFail.callCount, 1, "should have tried to refresh token")
-        XCTAssertNil(validToken.value, "should have reset token to nil on error")
-        XCTAssertNil(validRefresh.value, "should have reset refresh to nil on error")
+        XCTAssertEqual(validToken.value, "TOKEN", "should not have reset token on error")
+        XCTAssertEqual(validRefresh.value, "REFRESH", "should not have reset refresh on error")
     }
 
     func testFetchWithSessionFailFails() {

@@ -16,6 +16,7 @@ extension Auth {
             .map(useTokenToSign(request: request))
             .flatMap(fetchURLResultForRequest)
             .flatMap(refreshTokensIfNeeded)
+            .merge(with: tokenExpired)
             .first()
             .log(to: logger, prefix: "Fetch \(request.description)") { logger, result in
                 let code = (result.response as? HTTPURLResponse)?.statusCode ?? -1
