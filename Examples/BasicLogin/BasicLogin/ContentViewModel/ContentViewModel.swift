@@ -14,11 +14,7 @@ extension ContentView {
     class Model: ObservableObject {
         lazy var auth = Auth(
             doGetTokens: doGetTokens,
-            doRefreshToken: { _ in
-                Just<Auth.Tokens>(Auth.Tokens(token: "TOKEN", refresh: "REFRESH"))
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
-            },
+            doRefreshToken: doRefreshTokens,
             logger: Logger(subsystem: "com.example.BasicLogin", category: "auth")
         )
 
@@ -26,20 +22,7 @@ extension ContentView {
 
         @Published private var _status: Auth.Status = .notSignedIn
         var status: String {
-            switch _status {
-            case .signedIn:
-                return "Signed in."
-            case .signedInNoRefresh:
-                return "Signed in (no refresh)."
-            case .notSignedIn:
-                return "NOT signed in."
-            case .signingIn:
-                return "signing in..."
-            case .refreshingToken:
-                return "refreshing token..."
-            case .signingOut:
-                return "signing out..."
-            }
+            "\(_status)"
         }
 
         @Published var error: String?
@@ -55,4 +38,25 @@ extension ContentView {
                 .assign(to: &$_status)
         }
     }
+}
+
+extension Auth.Status: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .signedIn:
+            return "Signed in."
+        case .signedInNoRefresh:
+            return "Signed in (no refresh)."
+        case .notSignedIn:
+            return "NOT signed in."
+        case .signingIn:
+            return "signing in..."
+        case .refreshingToken:
+            return "refreshing token..."
+        case .signingOut:
+            return "signing out..."
+        }
+    }
+
+
 }

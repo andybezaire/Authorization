@@ -7,29 +7,22 @@
 
 import Authentication
 import Combine
-import SwiftUI
 import Foundation
+import SwiftUI
 
 extension ContentView.Model {
-    var doGetTokens: () -> AnyPublisher<Auth.Tokens, Error> {
-        return { [unowned self] in
-            return Future<Auth.Tokens, Error>() { cb in
-                callback = Callback(cb)
-            }
-            .eraseToAnyPublisher()
+    /// Use your own call to oath to get the token, including possible auth code swap for token
+    func doGetTokens() -> AnyPublisher<Auth.Tokens, Error> {
+        return Future<Auth.Tokens, Error>() {[weak self] cb in
+            self?.callback = Callback(cb)
         }
-    }
-}
-
-struct SignInSheet: View {
-    var body: some View {
-        Text("hi")
+        .eraseToAnyPublisher()
     }
 }
 
 struct Callback: Identifiable {
     let id = UUID()
-    let callback: ((Result<Auth.Tokens, Error>) -> Void)
+    let callback: (Result<Auth.Tokens, Error>) -> Void
     init(_ callback: @escaping ((Result<Auth.Tokens, Error>) -> Void)) {
         self.callback = callback
     }

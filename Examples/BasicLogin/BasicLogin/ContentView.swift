@@ -14,7 +14,11 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
+                Spacer()
                 SignInStatus(status: model.status, isSignedIn: model.isSignedIn)
+                Spacer()
+                Text(errorText)
+                    .font(.callout)
             }
             .toolbar {
                 if model.isSignedIn {
@@ -27,6 +31,10 @@ struct ContentView: View {
         .sheet(item: $model.callback) {
             LoginSheet(callback: $0)
         }
+    }
+
+    var errorText: String {
+        model.error.map { "Error: \($0)" } ?? " "
     }
 }
 
@@ -77,6 +85,7 @@ struct LoginSheet: View {
 enum LoginError: Error {
     case cancelled
     case interrupted
+    case noRefresh
 }
 
 struct ContentView_Previews: PreviewProvider {

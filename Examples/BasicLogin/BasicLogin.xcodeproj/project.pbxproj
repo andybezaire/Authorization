@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A13B6B34260712220047FA7F /* DoRefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13B6B33260712220047FA7F /* DoRefreshToken.swift */; };
 		A1E6E7172605FC8700A62CB5 /* BasicLoginApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7162605FC8700A62CB5 /* BasicLoginApp.swift */; };
 		A1E6E7192605FC8700A62CB5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7182605FC8700A62CB5 /* ContentView.swift */; };
 		A1E6E71B2605FC8800A62CB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1E6E71A2605FC8800A62CB5 /* Assets.xcassets */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A13B6B33260712220047FA7F /* DoRefreshToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoRefreshToken.swift; sourceTree = "<group>"; };
 		A1E6E7132605FC8700A62CB5 /* BasicLogin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasicLogin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1E6E7162605FC8700A62CB5 /* BasicLoginApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicLoginApp.swift; sourceTree = "<group>"; };
 		A1E6E7182605FC8700A62CB5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				A1E6E750260606C100A62CB5 /* ContentViewModel.swift */,
 				A1E6E75926060E5900A62CB5 /* SignInOut.swift */,
 				A1E6E75E260610B300A62CB5 /* DoGetTokens.swift */,
+				A13B6B33260712220047FA7F /* DoRefreshToken.swift */,
 			);
 			path = ContentViewModel;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A13B6B34260712220047FA7F /* DoRefreshToken.swift in Sources */,
 				A1E6E7192605FC8700A62CB5 /* ContentView.swift in Sources */,
 				A1E6E7172605FC8700A62CB5 /* BasicLoginApp.swift in Sources */,
 				A1E6E75A26060E5900A62CB5 /* SignInOut.swift in Sources */,
