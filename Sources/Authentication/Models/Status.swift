@@ -15,7 +15,7 @@ public extension Auth {
 
 extension Auth {
     func assignStatusFromTokens() {
-        token
+        updatingStatusFromTokens = token
             .combineLatest(refresh)
             .map { token, refresh in
                 switch (token, refresh) {
@@ -27,6 +27,8 @@ extension Auth {
                     return .signedInNoRefresh
                 }
             }
-            .assign(to: &$_status)
+            .sink { [unowned self] in
+                _status.send($0)
+            }
     }
 }
