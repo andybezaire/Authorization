@@ -635,7 +635,7 @@
 			repositoryURL = "https://github.com/andybezaire/Authentication.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.7.0;
+				minimumVersion = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
