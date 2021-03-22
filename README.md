@@ -173,7 +173,7 @@ extension ContentView {
 Add the following dependency to your **Package.swift** file:
 
 ```swift
-.package(name: "Authentication", url: "https://github.com/andybezaire/Authentication.git", from: "1.0")
+.package(name: "Authentication", url: "https://github.com/andybezaire/Authentication.git", from: "1.0.0")
 ```
 ## License
 
