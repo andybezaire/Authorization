@@ -27,9 +27,7 @@ extension Auth {
                     return .signedInNoRefresh
                 }
             }
-            .sink { [unowned self] in
-                _status.send($0)
-            }
+            .subscribe(_status)
     }
 }
 
