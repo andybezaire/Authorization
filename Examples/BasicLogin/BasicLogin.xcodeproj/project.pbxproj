@@ -11,6 +11,7 @@
 		A13B6B3D26073A680047FA7F /* Mocker in Frameworks */ = {isa = PBXBuildFile; productRef = A13B6B3C26073A680047FA7F /* Mocker */; };
 		A13B6B4226073AA90047FA7F /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13B6B4126073AA90047FA7F /* Utils.swift */; };
 		A13B6B4726073E400047FA7F /* Fetch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A13B6B4626073E400047FA7F /* Fetch.swift */; };
+		A1E56EA4261264B9007ACE50 /* Authorization in Frameworks */ = {isa = PBXBuildFile; productRef = A1E56EA3261264B9007ACE50 /* Authorization */; };
 		A1E6E7172605FC8700A62CB5 /* BasicLoginApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7162605FC8700A62CB5 /* BasicLoginApp.swift */; };
 		A1E6E7192605FC8700A62CB5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7182605FC8700A62CB5 /* ContentView.swift */; };
 		A1E6E71B2605FC8800A62CB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1E6E71A2605FC8800A62CB5 /* Assets.xcassets */; };
@@ -65,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1E56EA4261264B9007ACE50 /* Authorization in Frameworks */,
 				A13B6B3D26073A680047FA7F /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,6 +178,7 @@
 			name = BasicLogin;
 			packageProductDependencies = (
 				A13B6B3C26073A680047FA7F /* Mocker */,
+				A1E56EA3261264B9007ACE50 /* Authorization */,
 			);
 			productName = BasicLogin;
 			productReference = A1E6E7132605FC8700A62CB5 /* BasicLogin.app */;
@@ -250,6 +253,7 @@
 			mainGroup = A1E6E70A2605FC8700A62CB5;
 			packageReferences = (
 				A13B6B3B26073A680047FA7F /* XCRemoteSwiftPackageReference "Mocker" */,
+				A1E56EA2261264B9007ACE50 /* XCRemoteSwiftPackageReference "Authorization" */,
 			);
 			productRefGroup = A1E6E7142605FC8700A62CB5 /* Products */;
 			projectDirPath = "";
@@ -626,6 +630,14 @@
 				minimumVersion = 2.5.2;
 			};
 		};
+		A1E56EA2261264B9007ACE50 /* XCRemoteSwiftPackageReference "Authorization" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/andybezaire/Authorization.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -633,6 +645,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A13B6B3B26073A680047FA7F /* XCRemoteSwiftPackageReference "Mocker" */;
 			productName = Mocker;
+		};
+		A1E56EA3261264B9007ACE50 /* Authorization */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1E56EA2261264B9007ACE50 /* XCRemoteSwiftPackageReference "Authorization" */;
+			productName = Authorization;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "Authentication",
+        "package": "Authorization",
         "repositoryURL": "https://github.com/andybezaire/Authorization.git",
         "state": {
           "branch": null,
-          "revision": "2445227b27d6c5fa3f714e8d09c5d944e57eb43e",
-          "version": "1.0.2"
+          "revision": "7e47910f7944cb820ceb14ce1a589c93d083b177",
+          "version": "1.0.3"
         }
       },
       {
