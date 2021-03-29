@@ -7,12 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- added changelog
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+## [1.1.0] - 2021-03-29
+### Changed
+- renamed the repo to Authorization
 
 ## [1.0.2] - 2021-03-22
 
@@ -29,7 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.6.0] - 2021-03-14
 
 
-[Unreleased]: https://github.com/andybezaire/Authorization/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/andybezaire/Authorization/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/andybezaire/Authorization/compare/1.0.2...1.1.0
 [1.0.2]: https://github.com/andybezaire/Authorization/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/andybezaire/Authorization/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/andybezaire/Authorization/compare/0.8.1...1.0.0
