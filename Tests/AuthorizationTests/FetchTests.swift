@@ -5,11 +5,11 @@
 //  Created by Andy Bezaire on 14.3.2021.
 //
 
-@testable import Authentication
+@testable import Authorization
 import Mocker
 import XCTest
 
-final class FetchTests: AuthenticationTests {
+final class FetchTests: AuthorizationTests {
     func testFetchSuccessful() {
         let fetchFinished = XCTestExpectation(description: "Fetch request finished")
 

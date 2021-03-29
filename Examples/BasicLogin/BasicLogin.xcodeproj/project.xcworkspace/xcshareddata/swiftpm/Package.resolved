@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Authentication",
+        "repositoryURL": "https://github.com/andybezaire/Authorization.git",
+        "state": {
+          "branch": null,
+          "revision": "2445227b27d6c5fa3f714e8d09c5d944e57eb43e",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "CombineExtras",
+        "repositoryURL": "https://github.com/andybezaire/CombineExtras.git",
+        "state": {
+          "branch": null,
+          "revision": "93da54da062bd9b3f7a93481e115c7d4cd58a64e",
+          "version": "1.3.2"
+        }
+      },
+      {
+        "package": "Mocker",
+        "repositoryURL": "https://github.com/WeTransfer/Mocker.git",
+        "state": {
+          "branch": null,
+          "revision": "0e67361badee94a121f4fdaf2ab8b990c82408e7",
+          "version": "2.5.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

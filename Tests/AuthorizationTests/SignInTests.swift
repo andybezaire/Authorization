@@ -5,10 +5,10 @@
 //  Created by Andy Bezaire on 14.3.2021.
 //
 
-@testable import Authentication
+@testable import Authorization
 import XCTest
 
-final class SignInTests: AuthenticationTests {
+final class SignInTests: AuthorizationTests {
     func testSignInSuccessful() {
         let signInFinished = XCTestExpectation(description: "Sign in finished")
 

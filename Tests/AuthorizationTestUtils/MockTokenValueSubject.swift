@@ -6,7 +6,7 @@
 //
 
 import Combine
-import Authentication
+import Authorization
 import Foundation
 
 public class MockTokenValueSubject<Output, Failure>: TokenValueSubject<Output, Failure> where Failure: Error {

@@ -7,7 +7,7 @@
 
 import Foundation
 import Combine
-import Authentication
+import Authorization
 
 extension ContentView.Model {
     /// Use your own call to oath to refresh the token

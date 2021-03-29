@@ -1,10 +1,10 @@
-@testable import Authentication
-import AuthenticationTestUtils
+@testable import Authorization
+import AuthorizationTestUtils
 import Combine
 import os.log
 import XCTest
 
-class AuthenticationTests: XCTestCase {
+class AuthorizationTests: XCTestCase {
     let url = URL(string: "http://example.com")!
     var request: URLRequest { URLRequest(url: url) }
 
@@ -33,7 +33,7 @@ class AuthenticationTests: XCTestCase {
     var refresh: MockTokenValueSubject<String?, Never>!
     var validRefresh: MockTokenValueSubject<String?, Never>!
 
-    let logger = Logger(subsystem: "com.example.authentication", category: "AuthenticationTests")
+    let logger = Logger(subsystem: "com.example.authorization", category: "AuthorizationTests")
 
     var cancellable: AnyCancellable?
     var statusCancellable: AnyCancellable?

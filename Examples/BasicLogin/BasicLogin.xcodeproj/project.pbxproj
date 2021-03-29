@@ -17,7 +17,6 @@
 		A1E6E71E2605FC8800A62CB5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A1E6E71D2605FC8800A62CB5 /* Preview Assets.xcassets */; };
 		A1E6E7292605FC8800A62CB5 /* BasicLoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7282605FC8800A62CB5 /* BasicLoginTests.swift */; };
 		A1E6E7342605FC8800A62CB5 /* BasicLoginUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E7332605FC8800A62CB5 /* BasicLoginUITests.swift */; };
-		A1E6E74C260605D400A62CB5 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = A1E6E74B260605D400A62CB5 /* Authentication */; };
 		A1E6E751260606C100A62CB5 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E750260606C100A62CB5 /* ContentViewModel.swift */; };
 		A1E6E75A26060E5900A62CB5 /* SignInOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E75926060E5900A62CB5 /* SignInOut.swift */; };
 		A1E6E75F260610B300A62CB5 /* DoGetTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1E6E75E260610B300A62CB5 /* DoGetTokens.swift */; };
@@ -66,7 +65,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1E6E74C260605D400A62CB5 /* Authentication in Frameworks */,
 				A13B6B3D26073A680047FA7F /* Mocker in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -177,7 +175,6 @@
 			);
 			name = BasicLogin;
 			packageProductDependencies = (
-				A1E6E74B260605D400A62CB5 /* Authentication */,
 				A13B6B3C26073A680047FA7F /* Mocker */,
 			);
 			productName = BasicLogin;
@@ -252,7 +249,6 @@
 			);
 			mainGroup = A1E6E70A2605FC8700A62CB5;
 			packageReferences = (
-				A1E6E74A260605D400A62CB5 /* XCRemoteSwiftPackageReference "Authentication" */,
 				A13B6B3B26073A680047FA7F /* XCRemoteSwiftPackageReference "Mocker" */,
 			);
 			productRefGroup = A1E6E7142605FC8700A62CB5 /* Products */;
@@ -630,14 +626,6 @@
 				minimumVersion = 2.5.2;
 			};
 		};
-		A1E6E74A260605D400A62CB5 /* XCRemoteSwiftPackageReference "Authentication" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/andybezaire/Authentication.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -645,11 +633,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A13B6B3B26073A680047FA7F /* XCRemoteSwiftPackageReference "Mocker" */;
 			productName = Mocker;
-		};
-		A1E6E74B260605D400A62CB5 /* Authentication */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A1E6E74A260605D400A62CB5 /* XCRemoteSwiftPackageReference "Authentication" */;
-			productName = Authentication;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

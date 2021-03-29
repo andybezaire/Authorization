@@ -1,6 +1,6 @@
 import XCTest
 
-import AuthenticationTests
+import AuthorizationTests
 
 var tests = [XCTestCaseEntry]()
 tests += AuthenticationTests.allTests()

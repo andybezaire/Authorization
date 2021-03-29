@@ -5,7 +5,7 @@
 //  Created by Andy Bezaire on 20.3.2021.
 //
 
-import Authentication
+import Authorization
 import Combine
 import Foundation
 import UIKit

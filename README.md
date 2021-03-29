@@ -1,16 +1,16 @@
 
-# Authentication
+# Authorization
 <p>
   <img src="https://img.shields.io/badge/iOS-14-orange" />
   <img src="https://img.shields.io/badge/MacOS-11-brightgreen" />
   <img src="https://img.shields.io/badge/Swift-5.3-brightgreen.svg" />
-  <img src="https://img.shields.io/github/license/andybezaire/Authentication" />
+  <img src="https://img.shields.io/github/license/andybezaire/Authorization" />
   <a href="https://twitter.com/andy_bezaire">
-    <img src="https://img.shields.io/twitter/url?url=http%3A%2F%2Fgithub.com%2Fandybezaire%2FAuthentication=" alt="Twitter: @andy_bezaire" />
+    <img src="https://img.shields.io/twitter/url?url=http%3A%2F%2Fgithub.com%2Fandybezaire%2FAuthorization=" alt="Twitter: @andy_bezaire" />
   </a>
 </p>
 
-A small module backed by Combine. Used for authentication suitable for oauth 3 legged authentication.
+A small module backed by Combine. Used for authorization suitable for oauth 3 legged authorization.
 
 ## Usage
 
@@ -37,7 +37,7 @@ let signingIn = auth.signIn()
     }, receiveValue: { _ in })
 ```
 
-Do a fetch and Authentication will sign your URLRequest:
+Do a fetch and Authorization will sign your URLRequest:
 
 ```swift
 let request = URLRequest(url: URL(string: "example.com")!) // provide some URLRequest
@@ -99,11 +99,11 @@ let auth = Auth(
 
 ## Example Code
 
-Here is an example of using Auth to fetch from "www.example.com/name". This is a non-workign example. Replace the `Just` publishers with 
-the appropriate functions to fetch your tokens and handle a refresh.
+Here is an example of using Authorization to fetch from "www.example.com/name". This is a non-working example. 
+Replace the `Just` publishers with  the appropriate functions to fetch your tokens and handle a refresh.
 
 ```swift
-import Authentication
+import Authorization
 import Combine
 import Foundation
 
@@ -173,7 +173,7 @@ extension ContentView {
 Add the following dependency to your **Package.swift** file:
 
 ```swift
-.package(name: "Authentication", url: "https://github.com/andybezaire/Authentication.git", from: "1.0.0")
+.package(name: "Authorization", url: "https://github.com/andybezaire/Authorization.git", from: "1.0.0")
 ```
 ## License
 

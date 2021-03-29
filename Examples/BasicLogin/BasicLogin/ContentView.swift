@@ -5,7 +5,7 @@
 //  Created by Andy Bezaire on 20.3.2021.
 //
 
-import Authentication
+import Authorization
 import SwiftUI
 
 struct ContentView: View {
@@ -33,7 +33,7 @@ struct ContentView: View {
                     Button("Sign in...", action: model.signIn)
                 }
             }
-            .navigationTitle("Authentication")
+            .navigationTitle("Authorization")
         }
         .sheet(item: $model.callback) {
             LoginSheet(callback: $0)

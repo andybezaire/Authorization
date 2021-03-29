@@ -7,11 +7,11 @@
 
 import Foundation
 
-@testable import Authentication
+@testable import Authorization
 import Mocker
 import XCTest
 
-final class StatusTests: AuthenticationTests {
+final class StatusTests: AuthorizationTests {
     func testSignInSuccessful() {
         let signInFinished = XCTestExpectation(description: "Sign in finished")
 

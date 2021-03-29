@@ -5,11 +5,11 @@
 //  Created by Andy Bezaire on 14.3.2021.
 //
 
-@testable import Authentication
+@testable import Authorization
 import Mocker
 import XCTest
 
-final class MultipleFetchTests: AuthenticationTests {
+final class MultipleFetchTests: AuthorizationTests {
     func testTwoFetchesSucceessful() {
         let auth = Auth(
             doGetTokens: getTokensUnused(),

@@ -5,11 +5,11 @@
 //  Created by Andy Bezaire on 14.3.2021.
 //
 
-@testable import Authentication
+@testable import Authorization
 import Mocker
 import XCTest
 
-final class UseCaseTests: AuthenticationTests {
+final class UseCaseTests: AuthorizationTests {
     func testSignInAndFetchSuccessful() {
         let signInFinished = XCTestExpectation(description: "Sign in finished")
 
