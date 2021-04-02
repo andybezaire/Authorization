@@ -139,8 +139,6 @@ class AuthorizationTests: XCTestCase {
 extension Auth.Error: Equatable {
     public static func == (lhs: Auth.Error, rhs: Auth.Error) -> Bool {
         switch (lhs, rhs) {
-        case (.signInFailed(_), .signInFailed(_)):
-            return true
         case (.tokenExpired, .tokenExpired):
             return true
         case (.tokenNil, .tokenNil):
