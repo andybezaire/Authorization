@@ -50,7 +50,7 @@ public class Auth {
 
     // This is used when a refresh fails, in order to propagate the error
     internal let tokenError = PassthroughSubject<Void, Never>()
-    var tokenExpired: AnyPublisher<URLResult, Error> {
+    var tokenExpired: AnyPublisher<URLResult, Swift.Error> {
         tokenError
             .tryMap { _ in throw Error.tokenExpired }
             .mapError { _ in Error.tokenExpired }

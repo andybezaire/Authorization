@@ -9,10 +9,9 @@ import Combine
 import Foundation
 
 extension Auth {
-    public func fetch(_ request: URLRequest) -> AnyPublisher<URLResult, Error> {
+    public func fetch(_ request: URLRequest) -> AnyPublisher<URLResult, Swift.Error> {
         token
             .tryMap(tryUnwrapToken)
-            .mapError(toAuthError)
             .map(useTokenToSign(request: request))
             .flatMap(fetchURLResultForRequest)
             .flatMap(refreshTokensIfNeeded)
@@ -25,35 +24,26 @@ extension Auth {
             .eraseToAnyPublisher()
     }
 
-    private func toAuthError(error: Swift.Error) -> Error {
-        switch error {
-        case let authError as Error:
-            return authError
-        default:
-            return .unknown
-        }
-    }
-
     private func useTokenToSign(request: URLRequest) -> ((Token) -> URLRequest) {
         return { token in
             self.signRequest(request, token)
         }
     }
 
-    private func fetchURLResultForRequest(request: URLRequest) -> AnyPublisher<URLResult, Error> {
+    private func fetchURLResultForRequest(request: URLRequest) -> AnyPublisher<URLResult, Swift.Error> {
         URLSession.shared.dataTaskPublisher(for: request)
-            .mapError { Error.urlError($0) }
+            .mapError { $0 as Swift.Error }
             .eraseToAnyPublisher()
     }
 
-    private func refreshTokensIfNeeded(result: URLResult) -> AnyPublisher<URLResult, Error> {
+    private func refreshTokensIfNeeded(result: URLResult) -> AnyPublisher<URLResult, Swift.Error> {
         if shouldDoRefreshFor(result) {
             refreshTokens()
             return Empty()
                 .eraseToAnyPublisher()
         } else {
             return Just(result)
-                .setFailureType(to: Error.self)
+                .setFailureType(to: Swift.Error.self)
                 .eraseToAnyPublisher()
         }
     }

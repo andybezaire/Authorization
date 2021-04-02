@@ -144,7 +144,7 @@ final class MultipleFetchTests: AuthorizationTests {
             .sink { completion in
                 switch completion {
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.tokenNil, "Error should be token nil")
+                    XCTAssertEqual(error as? Auth.Error, Auth.Error.tokenNil, "Error should be token nil")
                 case .finished:
                     XCTFail("Fetch should complete with error")
                 }
@@ -178,7 +178,7 @@ final class MultipleFetchTests: AuthorizationTests {
                 case .finished:
                     XCTFail("Should fail with error")
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.urlError(URLError(.badURL)), "Error should be from session")
+                    XCTAssertEqual((error as? URLError)?.errorCode, URLError(.badURL).errorCode, "Error should be from session")
                     firstFetchFinished.fulfill() // success
                 }
             }, receiveValue: { _ in
@@ -195,7 +195,7 @@ final class MultipleFetchTests: AuthorizationTests {
                 case .finished:
                     XCTFail("Should fail with error")
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.urlError(URLError(.badURL)), "Error should be from session")
+                    XCTAssertEqual((error as? URLError)?.errorCode, URLError(.badURL).errorCode, "Error should be from session")
                     secondFetchFinished.fulfill() // success
                 }
             }, receiveValue: { _ in

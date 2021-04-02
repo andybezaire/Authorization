@@ -11,11 +11,10 @@ import Foundation
 public extension Auth {
     /// sign in and get tokens.
     /// - Returns: publisher that never sends a value only a completion with error if fail
-    func signIn() -> AnyPublisher<Void, Error> {
+    func signIn() -> AnyPublisher<Void, Swift.Error> {
         _status.send(.signingIn)
 
         return doGetTokens()
-            .mapError { Error.signInFailed($0) }
             .handleEvents(
                 receiveOutput: { [unowned self] in
                     tokenSubject.send($0.token)
@@ -34,18 +33,17 @@ public extension Auth {
                 logger.log("SignIn got token \(output.token, privacy: .private)")
                 logger.log("SignIn got refresh \(output.refresh ?? "nil", privacy: .private)")
             }
-            .flatMap { _ in Empty<Void, Error>().eraseToAnyPublisher() }
+            .flatMap { _ in Empty<Void, Swift.Error>().eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }
 
     /// sign out, clear tokens.
     /// - Returns: publisher that never sends a value only a completion with error if fail
     /// current implementation never fails
-    func signOut() -> AnyPublisher<Void, Error> {
+    func signOut() -> AnyPublisher<Void, Swift.Error> {
         _status.send(.signingOut)
 
         return Just(())
-            .mapError { Error.signOutFailed($0) }
             .handleEvents(
                 receiveCompletion: { [unowned self] _ in
                     tokenSubject.send(nil)
@@ -53,7 +51,7 @@ public extension Auth {
                 }
             )
             .log(to: logger, prefix: "SignOut")
-            .flatMap { _ in Empty<Void, Error>().eraseToAnyPublisher() }
+            .flatMap { _ in Empty<Void, Swift.Error>().eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }
 }
