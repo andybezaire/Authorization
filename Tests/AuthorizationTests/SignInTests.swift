@@ -63,7 +63,7 @@ final class SignInTests: AuthorizationTests {
                 case .finished:
                     XCTFail("Sign in should fail")
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.signInFailed(TestError.canBeAnyError), "Error sould be signInFailed")
+                    XCTAssertEqual(error as? TestError, TestError.fail, "Error should be fail")
                     signInFinished.fulfill() // success
                 }
             }, receiveValue: { _ in
