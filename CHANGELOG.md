@@ -11,8 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
-- resetting all cancellables in tests
 ### Security
+
+## [1.2.0] - 2021-04-02
+### Added
+- Publishers with Output == Never now get a sink with only receiveCompletion
+### Changed
+- sign in and sign out now use Never for the Output (instead of Void)
+- changed the error type to Swift.Error no longer wrapping the errors in an auth error
+- updated the example app to use the new api
+### Removed
+- removed unused auth errors
 
 ## [1.1.0] - 2021-03-29
 ### Changed
@@ -33,7 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.6.0] - 2021-03-14
 
 
-[Unreleased]: https://github.com/andybezaire/Authorization/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/andybezaire/Authorization/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/andybezaire/Authorization/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/andybezaire/Authorization/compare/1.0.2...1.1.0
 [1.0.2]: https://github.com/andybezaire/Authorization/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/andybezaire/Authorization/compare/1.0.0...1.0.1
