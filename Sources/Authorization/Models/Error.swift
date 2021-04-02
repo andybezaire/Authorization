@@ -11,8 +11,6 @@ public extension Auth {
     enum Error: Swift.Error {
         case tokenExpired
         case tokenNil
-        case urlError(URLError)
-        case unknown
     }
 }
 
@@ -23,10 +21,6 @@ extension Auth.Error: LocalizedError {
                 return "Token expired."
             case .tokenNil:
                 return "Token nil."
-            case .urlError(let error):
-                return "Request failed (\(error.localizedDescription))."
-            case .unknown:
-                return "Unknown error."
             }
         }
 }

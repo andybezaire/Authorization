@@ -32,7 +32,7 @@ extension Auth {
 
     private func fetchURLResultForRequest(request: URLRequest) -> AnyPublisher<URLResult, Swift.Error> {
         URLSession.shared.dataTaskPublisher(for: request)
-            .mapError { $0 as Swift.Error }
+            .mapError { $0 }
             .eraseToAnyPublisher()
     }
 

@@ -136,25 +136,8 @@ class AuthorizationTests: XCTestCase {
     }
 }
 
-extension Auth.Error: Equatable {
-    public static func == (lhs: Auth.Error, rhs: Auth.Error) -> Bool {
-        switch (lhs, rhs) {
-        case (.tokenExpired, .tokenExpired):
-            return true
-        case (.tokenNil, .tokenNil):
-            return true
-        case (.unknown, .unknown):
-            return true
-        case (.urlError(_), .urlError(_)):
-            return true
-        default:
-            return false
-        }
-    }
-}
-
 enum TestError: Error {
-    case fail, canBeAnyError
+    case fail
 }
 
 import Mocker

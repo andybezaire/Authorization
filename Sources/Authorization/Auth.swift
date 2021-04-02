@@ -53,7 +53,6 @@ public class Auth {
     var tokenExpired: AnyPublisher<URLResult, Swift.Error> {
         tokenError
             .tryMap { _ in throw Error.tokenExpired }
-            .mapError { _ in Error.tokenExpired }
             .eraseToAnyPublisher()
     }
 
