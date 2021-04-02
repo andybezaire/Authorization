@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Deprecated
 ### Removed
 ### Fixed
+- resetting all cancellables in tests
 ### Security
 
 ## [1.1.0] - 2021-03-29

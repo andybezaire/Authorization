@@ -132,6 +132,7 @@ class AuthorizationTests: XCTestCase {
 
     override func tearDown() {
         cancellable = nil
+        statusCancellable = nil
     }
 }
 
