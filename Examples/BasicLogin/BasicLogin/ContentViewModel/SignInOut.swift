@@ -16,7 +16,7 @@ extension ContentView.Model {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] in
                 handle(completion: $0)
-            }, receiveValue: { _ in })
+            })
     }
 
     func signOut() {
@@ -24,7 +24,7 @@ extension ContentView.Model {
             .receive(on: RunLoop.main)
             .sink(receiveCompletion: { [unowned self] in
                 handle(completion: $0)
-            }, receiveValue: { _ in })
+            })
     }
 
     private func handle(completion: Subscribers.Completion<Auth.Error>) {

@@ -34,7 +34,7 @@ let signingIn = auth.signIn()
         case .finished:
             print("Signed in.")
         } 
-    }, receiveValue: { _ in })
+    })
 ```
 
 Do a fetch and Authorization will sign your URLRequest:
@@ -133,7 +133,7 @@ extension ContentView {
                     case .finished:
                         refreshName()
                     }
-                }, receiveValue: { _ in })
+                })
         }
         
         func signOut() {
@@ -146,7 +146,7 @@ extension ContentView {
                     case .finished:
                         name = nil
                     }
-                }, receiveValue: { _ in })
+                })
         }
         
         @Published var name: String?
