@@ -104,7 +104,7 @@ final class FetchTests: AuthorizationTests {
                 case .finished:
                     XCTFail("Fetch should complete with error")
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.tokenNil, "Error should be token nil")
+                    XCTAssertEqual(error as? Auth.Error, Auth.Error.tokenNil, "Error should be token nil")
                 }
                 requestFinished.fulfill()
             }, receiveValue: { _ in
@@ -136,7 +136,7 @@ final class FetchTests: AuthorizationTests {
                 case .finished:
                     XCTFail("Should fail with error")
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.tokenExpired, "Error should be that token is expired")
+                    XCTAssertEqual(error as? Auth.Error, Auth.Error.tokenExpired, "Error should be that token is expired")
                     fetchFinished.fulfill() // success
                 }
             }, receiveValue: { _ in
@@ -174,7 +174,7 @@ final class FetchTests: AuthorizationTests {
                 case .finished:
                     XCTFail("Should fail with error")
                 case .failure(let error):
-                    XCTAssertEqual(error, Auth.Error.urlError(URLError(.badURL)), "Error should be from session")
+                    XCTAssertEqual((error as? URLError)?.errorCode, URLError(.badURL).errorCode, "Error should be from session")
                     fetchFinished.fulfill() // success
                 }
             }, receiveValue: { _ in
