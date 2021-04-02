@@ -32,7 +32,7 @@ final class StatusTests: AuthorizationTests {
             }
 
         cancellable = auth.signIn()
-            .sink(receiveCompletion: { _ in signInFinished.fulfill() }, receiveValue: { _ in })
+            .sink(receiveCompletion: { _ in signInFinished.fulfill() })
 
         wait(for: [signInFinished], timeout: 1)
 
@@ -61,7 +61,7 @@ final class StatusTests: AuthorizationTests {
             }
 
         cancellable = auth.signIn()
-            .sink(receiveCompletion: { _ in signInFinished.fulfill() }, receiveValue: { _ in })
+            .sink(receiveCompletion: { _ in signInFinished.fulfill() })
 
         wait(for: [signInFinished], timeout: 1)
 
@@ -90,7 +90,7 @@ final class StatusTests: AuthorizationTests {
             }
 
         cancellable = auth.signIn()
-            .sink(receiveCompletion: { _ in signInFinished.fulfill() }, receiveValue: { _ in })
+            .sink(receiveCompletion: { _ in signInFinished.fulfill() })
 
         wait(for: [signInFinished], timeout: 1)
 
@@ -150,7 +150,7 @@ final class StatusTests: AuthorizationTests {
             }
 
         cancellable = auth.signOut()
-            .sink(receiveCompletion: { _ in signOutFinished.fulfill() }, receiveValue: { _ in })
+            .sink(receiveCompletion: { _ in signOutFinished.fulfill() })
 
         wait(for: [signOutFinished], timeout: 1)
 

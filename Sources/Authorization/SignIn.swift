@@ -11,7 +11,7 @@ import Foundation
 public extension Auth {
     /// sign in and get tokens.
     /// - Returns: publisher that never sends a value only a completion with error if fail
-    func signIn() -> AnyPublisher<Void, Swift.Error> {
+    func signIn() -> AnyPublisher<Never, Swift.Error> {
         _status.send(.signingIn)
 
         return doGetTokens()
@@ -33,14 +33,14 @@ public extension Auth {
                 logger.log("SignIn got token \(output.token, privacy: .private)")
                 logger.log("SignIn got refresh \(output.refresh ?? "nil", privacy: .private)")
             }
-            .flatMap { _ in Empty<Void, Swift.Error>().eraseToAnyPublisher() }
+            .flatMap { _ in Empty<Never, Swift.Error>().eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }
 
     /// sign out, clear tokens.
     /// - Returns: publisher that never sends a value only a completion with error if fail
     /// current implementation never fails
-    func signOut() -> AnyPublisher<Void, Swift.Error> {
+    func signOut() -> AnyPublisher<Never, Swift.Error> {
         _status.send(.signingOut)
 
         return Just(())
@@ -51,7 +51,7 @@ public extension Auth {
                 }
             )
             .log(to: logger, prefix: "SignOut")
-            .flatMap { _ in Empty<Void, Swift.Error>().eraseToAnyPublisher() }
+            .flatMap { _ in Empty<Never, Swift.Error>().eraseToAnyPublisher() }
             .eraseToAnyPublisher()
     }
 }
