@@ -9,7 +9,7 @@ import Foundation
 
 public extension Auth {
     enum Status {
-        case signedIn, signedInNoRefresh, notSignedIn, signingIn, refreshingToken, signingOut
+        case signedIn, signedInNoRefresh, notSignedIn, signedInTokenExpired, signingIn, refreshingToken, signingOut
     }
 }
 
@@ -40,6 +40,8 @@ extension Auth.Status: CustomStringConvertible {
             return "Signed in (No refresh)."
         case .notSignedIn:
             return "NOT signed in"
+        case .signedInTokenExpired:
+            return "Signed in (Token expired)."
         case .signingIn:
             return "Signing in..."
         case .refreshingToken:

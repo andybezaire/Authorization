@@ -17,9 +17,10 @@ extension Auth {
             .flatMap(doRefreshToken)
             .catch { [unowned self] (_: Swift.Error) -> Empty<Tokens, Swift.Error> in
                 tokenError.send(())
+                _status.send(.signedInTokenExpired)
                 return Empty()
             }
-            .map { $0 as Tokens? }
+            .map { $0 }
             .replaceError(with: nil)
             .log(to: logger, prefix: "Fetch Refresh") { logger, output in
                 logger.log("Fetch Refresh got token: \(output?.token ?? "nil", privacy: .private)")

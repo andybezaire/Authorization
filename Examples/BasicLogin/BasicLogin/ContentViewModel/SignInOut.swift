@@ -27,7 +27,7 @@ extension ContentView.Model {
             })
     }
 
-    private func handle(completion: Subscribers.Completion<Auth.Error>) {
+    private func handle(completion: Subscribers.Completion<Error>) {
         switch completion {
         case .failure(let authError):
             error = authError.localizedDescription

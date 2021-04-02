@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 
+## [1.2.1] - 2021-04-02
+### Added
+- new status of token expired when refresh fails
+
 ## [1.2.0] - 2021-04-02
 ### Added
 - Publishers with Output == Never now get a sink with only receiveCompletion
@@ -42,7 +46,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.6.0] - 2021-03-14
 
 
-[Unreleased]: https://github.com/andybezaire/Authorization/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/andybezaire/Authorization/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/andybezaire/Authorization/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/andybezaire/Authorization/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/andybezaire/Authorization/compare/1.0.2...1.1.0
 [1.0.2]: https://github.com/andybezaire/Authorization/compare/1.0.1...1.0.2
