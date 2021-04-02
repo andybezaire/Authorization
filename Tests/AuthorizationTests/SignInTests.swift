@@ -31,8 +31,6 @@ final class SignInTests: AuthorizationTests {
                     XCTFail("Sign in should succeed")
                 }
                 signInFinished.fulfill()
-            }, receiveValue: { _ in
-                XCTFail("Sign in should not receive value")
             })
 
         wait(for: [signInFinished], timeout: 1)
@@ -66,8 +64,6 @@ final class SignInTests: AuthorizationTests {
                     XCTAssertEqual(error as? TestError, TestError.fail, "Error should be fail")
                     signInFinished.fulfill() // success
                 }
-            }, receiveValue: { _ in
-                XCTFail("Sign in should not receive value")
             })
 
         wait(for: [signInFinished], timeout: 1)
@@ -101,8 +97,6 @@ final class SignInTests: AuthorizationTests {
                     XCTFail("Sign out should succeed")
                 }
                 signOutFinished.fulfill()
-            }, receiveValue: { _ in
-                XCTFail("Sign out should not receive value")
             })
 
         wait(for: [signOutFinished], timeout: 1)

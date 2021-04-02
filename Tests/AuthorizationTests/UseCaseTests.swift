@@ -27,8 +27,6 @@ final class UseCaseTests: AuthorizationTests {
                 case .failure:
                     XCTFail("Sign in should succeed")
                 }
-            }, receiveValue: { _ in
-                XCTFail("Sign in should not receive value")
             })
 
         wait(for: [signInFinished], timeout: 1)
@@ -72,8 +70,6 @@ final class UseCaseTests: AuthorizationTests {
                 case .failure:
                     XCTFail("Sign in should succeed")
                 }
-            }, receiveValue: { _ in
-                XCTFail("Sign in should not receive value")
             })
 
         wait(for: [signInFinished], timeout: 1)
@@ -160,8 +156,6 @@ final class UseCaseTests: AuthorizationTests {
                 case .failure:
                     XCTFail("Sign in should succeed")
                 }
-            }, receiveValue: { _ in
-                XCTFail("Sign in should not receive value")
             })
 
         wait(for: [signInFinished], timeout: 1)
