@@ -30,7 +30,7 @@ extension ContentView {
         @Published var callback: Callback?
 
         var isSignedIn: Bool {
-            _status == .signedIn || _status == .signedInNoRefresh || _status == .refreshingToken
+            _status == .signedIn || _status == .signedInNoRefresh || _status == .signedInTokenExpired || _status == .refreshingToken || _status == .signingOut
         }
 
         internal var fetching: AnyCancellable?
