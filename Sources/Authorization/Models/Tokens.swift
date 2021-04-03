@@ -20,3 +20,9 @@ public extension Auth {
         }
     }
 }
+
+extension Auth.Tokens: CustomStringConvertible {
+    public var description: String {
+        "token: \(token), refresh: \(refresh ?? "nil")"
+    }
+}
