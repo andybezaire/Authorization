@@ -39,12 +39,14 @@ public class Auth {
     let tokenSubject: TokenValueSubject<Token?, Never>
     var token: AnyPublisher<Token?, Never> {
         return tokenSubject
+            .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
 
     let refreshSubject: TokenValueSubject<Refresh?, Never>
     var refresh: AnyPublisher<Refresh?, Never> {
         return refreshSubject
+            .receive(on: RunLoop.main)
             .eraseToAnyPublisher()
     }
 
