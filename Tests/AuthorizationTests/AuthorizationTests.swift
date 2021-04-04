@@ -14,6 +14,7 @@ class AuthorizationTests: XCTestCase {
     var getTokensUnused: MockFunction0<AnyPublisher<Auth.Tokens, Error>>!
 
     var refreshTokenSuccess: MockFunction1<String, AnyPublisher<Auth.Tokens, Error>>!
+    var refreshTokenSuccessNilRefresh: MockFunction1<String, AnyPublisher<Auth.Tokens, Error>>!
     var refreshTokenFail: MockFunction1<String, AnyPublisher<Auth.Tokens, Error>>!
     var refreshTokenUnused: MockFunction1<String, AnyPublisher<Auth.Tokens, Error>>!
 
@@ -67,6 +68,12 @@ class AuthorizationTests: XCTestCase {
 
         refreshTokenSuccess = MockFunction1 { (refresh: String) in
             Just(Auth.Tokens(token: refresh + "+TOKEN", refresh: refresh + "+REFRESH"))
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
+        refreshTokenSuccessNilRefresh = MockFunction1 { (refresh: String) in
+            Just(Auth.Tokens(token: refresh + "+TOKEN", refresh: nil))
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
         }
