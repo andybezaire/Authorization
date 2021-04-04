@@ -9,6 +9,12 @@ import Combine
 import Foundation
 
 extension Auth {
+    /// [Refreshing Access Tokens](https://www.oauth.com/oauth2-servers/access-tokens/refreshing-access-tokens/)
+    ///
+    /// The response to the refresh token grant is the same as when issuing an access token.
+    /// You can optionally issue a new refresh token in the response, or if you don’t include a new refresh token,
+    ///  the client assumes the current refresh token will continue to be valid.
+    /// - Parameter tokens: tokens to save
     func refreshTokens() {
         _status.send(.refreshingToken)
 
@@ -36,6 +42,15 @@ extension Auth {
 
     private func saveInSubjects(tokens: Tokens?) {
         tokenSubject.send(tokens?.token)
-        refreshSubject.send(tokens?.refresh)
+        if let refresh = tokens?.refresh {
+            refreshSubject.send(refresh)
+        }
+    }
+}
+
+public extension Auth {
+    /// Force `Auth` to refresh the tokens. This is intended to be used while debugging and not for normal use. 
+    func forceTokenRefresh() {
+        refreshTokens()
     }
 }
