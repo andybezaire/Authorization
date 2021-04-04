@@ -10,7 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - added force token refresh intended for debug use
 ### Changed
 - on token refresh, if the new refresh is nil, then keep the old refresh
-- token and refresh publishers publish on the main thread
 ### Deprecated
 ### Removed
 ### Fixed
