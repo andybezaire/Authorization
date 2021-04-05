@@ -15,7 +15,7 @@ public class Auth {
         doGetTokens: @escaping () -> AnyPublisher<Tokens, Swift.Error>,
         doRefreshToken: @escaping (_ refresh: Refresh) -> AnyPublisher<Tokens, Swift.Error>,
         signRequest: @escaping (_ request: URLRequest, _ token: Token) -> URLRequest = Auth.signedWithBearerToken,
-        shouldDoRefreshFor: @escaping (_ result: URLResult) -> Bool = Auth.isResponseCode403,
+        shouldDoRefreshFor: @escaping (_ result: URLResult) -> Bool = Auth.isResponseCode401,
         tokenSubject: TokenValueSubject<Token?, Never> = TokenValueSubject<Token?, Never>(nil),
         refreshSubject: TokenValueSubject<Refresh?, Never> = TokenValueSubject<Refresh?, Never>(nil),
         logger: Logger? = nil

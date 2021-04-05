@@ -9,6 +9,18 @@ import Foundation
 
 public extension Auth {
     /// Default implementation for `shouldDoRefreshFor`.
+    /// - will return true if http response status code is 401
+    static let isResponseCode401: (_ forResult: URLResult) -> Bool = { result in
+        if let httpResponse = result.response as? HTTPURLResponse,
+           httpResponse.statusCode == 401
+        {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    /// Alternate implementation for `shouldDoRefreshFor`.
     /// - will return true if http response status code is 403
     static let isResponseCode403: (_ forResult: URLResult) -> Bool = { result in
         if let httpResponse = result.response as? HTTPURLResponse,
