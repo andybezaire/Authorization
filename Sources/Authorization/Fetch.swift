@@ -17,10 +17,6 @@ extension Auth {
             .flatMap(refreshTokensIfNeeded)
             .merge(with: tokenExpired)
             .first()
-            .log(to: logger, prefix: "Fetch \(request.description)") { logger, result in
-                let code = (result.response as? HTTPURLResponse)?.statusCode ?? -1
-                logger.log("Fetch \(request.description) response code \(code)")
-            }
             .eraseToAnyPublisher()
     }
 

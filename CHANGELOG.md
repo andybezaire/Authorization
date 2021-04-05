@@ -7,13 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- added force token refresh intended for debug use
 ### Changed
-- on token refresh, if the new refresh is nil, then keep the old refresh
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
+
+## [1.4.0] - 2021-04-05
+### Added
+- added force token refresh intended for debug use
+- added token refresh on 401 response
+### Changed
+- on token refresh, if the new refresh is nil, then keep the old refresh
+- using refresh on 401 as default
+- cleaned up logging
 
 ## [1.3.0] - 2021-04-03
 ### Added
@@ -56,7 +63,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.6.0] - 2021-03-14
 
 
-[Unreleased]: https://github.com/andybezaire/Authorization/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/andybezaire/Authorization/compare/1.4.0...HEAD
+[1.3.0]: https://github.com/andybezaire/Authorization/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/andybezaire/Authorization/compare/1.2.1...1.3.0
 [1.2.1]: https://github.com/andybezaire/Authorization/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/andybezaire/Authorization/compare/1.1.0...1.2.0

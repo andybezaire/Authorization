@@ -29,8 +29,8 @@ extension Auth {
             .map { $0 }
             .replaceError(with: nil)
             .log(to: logger, prefix: "Fetch Refresh") { logger, output in
-                logger.log("Fetch Refresh got token: \(output?.token ?? "nil", privacy: .private)")
-                logger.log("Fetch Refresh got refresh: \(output?.refresh ?? "nil", privacy: .private)")
+                let tokens = output.map { "\($0)" } ?? "nil"
+                logger.log("Fetch Refresh got tokens: \(tokens, privacy: .private)")
             }
             .sink(receiveValue: saveInSubjects)
     }
