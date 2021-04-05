@@ -78,7 +78,7 @@ final class UseCaseTests: AuthorizationTests {
         // fail
         // success
         Mock(sequentialMocks: [
-            Mock(url: url, dataType: .json, statusCode: 403, data: [.get: Data()]),
+            Mock(url: url, dataType: .json, statusCode: 401, data: [.get: Data()]),
             Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()]),
             Mock(url: url, dataType: .json, statusCode: 999, data: [.get: Data()], requestError: URLError(.badURL)),
             Mock(url: url, dataType: .json, statusCode: 200, data: [.get: Data()]),
