@@ -10,7 +10,7 @@ let package = Package(
     ],
     dependencies: [
         .package(name: "Mocker", url: "https://github.com/andybezaire/Mocker.git", from: "2.3.0"),
-        .package(name: "CombineExtras", url: "https://github.com/andybezaire/CombineExtras.git", from: "1.2.0")
+        .package(name: "CombineExtras", url: "https://github.com/andybezaire/CombineExtras.git", from: "1.4.0")
     ],
     targets: [
         .target(name: "Authorization", dependencies: ["CombineExtras"]),

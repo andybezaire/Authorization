@@ -27,7 +27,7 @@ extension Auth {
     }
 
     private func fetchURLResultForRequest(request: URLRequest) -> AnyPublisher<URLResult, Swift.Error> {
-        URLSession.shared.dataTaskPublisher(for: request)
+        URLSession.shared.loggingDataTask(for: request, using: logger, prefix: "Auth fetch")
             .mapError { $0 }
             .eraseToAnyPublisher()
     }
