@@ -10,6 +10,7 @@ import CombineExtras
 import Foundation
 import os.log
 
+/// Manage request signing and token refreshing for url requests
 public class Auth {
     public init(
         doGetTokens: @escaping () -> AnyPublisher<Tokens, Swift.Error>,
