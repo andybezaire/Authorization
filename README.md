@@ -14,7 +14,7 @@ A small module backed by Combine. Used for authorization suitable for oauth 3 le
 
 ## Usage
 
-Create an authorization object:
+Create an authorization object: 
 
 ```swift
 let auth = Auth(
