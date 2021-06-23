@@ -10,7 +10,7 @@
   </a>
 </p>
 
-A small module backed by Combine. Used for authorization suitable for oauth 3 legged authorization.
+A small module backed by Combine. Used for authorization suitable for oauth 3 legged authorization. 
 
 ## Usage
 
